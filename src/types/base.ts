@@ -1,4 +1,5 @@
 import * as types from '../types';
+import * as values from '../values';
 
 export abstract class Type {
   constructor(private privTypeString: string) {
@@ -10,6 +11,10 @@ export abstract class Type {
 
   public ptr(): types.Pointer {
     return new types.Pointer(this);
+  }
+
+  public val(_: any): values.Value {
+    throw new Error('Not supported');
   }
 
   public isVoid(): boolean { return this instanceof types.Void; }

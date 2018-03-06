@@ -1,3 +1,4 @@
+import * as values from '../values';
 import { Type } from './base';
 
 export class Int extends Type {
@@ -12,5 +13,9 @@ export class Int extends Type {
 
     const toInt = to as Int;
     return toInt.width === this.width;
+  }
+
+  public val(num: number): values.constants.Int {
+    return new values.constants.Int(this, num);
   }
 }
