@@ -21,6 +21,13 @@ describe('bitcode/types', () => {
     assert.strictEqual(i32.typeString, 'i32');
   });
 
+  it('should create Signature', () => {
+    const sig = b.signature(b.void(), [ b.i(32), b.i(8) ]);
+
+    assert(sig.isSignature());
+    assert.strictEqual(sig.typeString, 'void (i32, i8)');
+  });
+
   describe('Pointer', () => {
     it('should not point to Void', () => {
       assert.throws(() => b.void().ptr(), /Can't create pointer to void/);
@@ -32,6 +39,22 @@ describe('bitcode/types', () => {
       assert(p.isPointer());
       assert.strictEqual(p.typeString, 'i32*');
       assert(p.to.isInt());
+    });
+
+    it('should point to Signature', () => {
+      const p = b.signature(b.void(), [ b.i(32), b.i(8) ]).ptr();
+
+      assert(p.isPointer());
+      assert.strictEqual(p.typeString, 'void (i32, i8)*');
+      assert(p.to.isSignature());
+    });
+
+    it('should point to Pointer', () => {
+      const p = b.i(32).ptr().ptr();
+
+      assert(p.isPointer());
+      assert.strictEqual(p.typeString, 'i32**');
+      assert(p.to.isPointer());
     });
   });
 });
