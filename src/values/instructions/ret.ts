@@ -1,0 +1,9 @@
+import * as values from '../';
+import { Type, Void } from '../../types';
+import { Instruction } from './base';
+
+export class Ret extends Instruction {
+  constructor(operand: values.Value | null) {
+    super(new Void(), operand === null ? [] : [ operand ]);
+  }
+}

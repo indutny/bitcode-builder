@@ -1,3 +1,6 @@
 import { Instruction } from './base';
+import { Binop, BinopType } from './binop';
+import { Phi } from './phi';
+import { Ret } from './ret';
 
-export { Instruction };
+export { Binop, BinopType, Instruction, Phi, Ret };
