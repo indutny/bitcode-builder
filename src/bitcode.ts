@@ -21,4 +21,8 @@ export class Bitcode {
   public array(length: number, elemType: types.Type): types.Array {
     return new types.Array(length, elemType);
   }
+
+  public struct(name: string | null = null): types.Struct {
+    return new types.Struct(name);
+  }
 }

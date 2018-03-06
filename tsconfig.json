@@ -3,8 +3,10 @@
     "strict": true,
     "target": "es2017",
     "module": "commonjs",
-    "pretty": true,
-    "outDir": "./built"
+    "outDir": "./lib",
+    "declaration": true
   },
-  "include": [ "src/*.ts", "src/**/*.ts", "src/**/**/*.ts" ]
+  "include": [
+    "src/*.ts", "src/**/*.ts", "src/**/**/*.ts", "src/**/**/**/*.ts"
+  ]
 }

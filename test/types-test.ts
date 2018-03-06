@@ -2,7 +2,7 @@ import * as assert from 'assert';
 import { Bitcode } from '../';
 
 describe('bitcode/types', () => {
-  let b;
+  let b: Bitcode;
   beforeEach(() => {
     b = new Bitcode();
   });
@@ -12,6 +12,7 @@ describe('bitcode/types', () => {
 
     assert(t.isVoid());
     assert.strictEqual(t.typeString, 'void');
+    assert(t.isEqual(b.void()));
   });
 
   it('should create Int', () => {
@@ -19,6 +20,8 @@ describe('bitcode/types', () => {
 
     assert(i32.isInt());
     assert.strictEqual(i32.typeString, 'i32');
+    assert(i32.isEqual(b.i(32)));
+    assert(!i32.isEqual(b.i(16)));
   });
 
   it('should create Signature', () => {
@@ -26,19 +29,52 @@ describe('bitcode/types', () => {
 
     assert(sig.isSignature());
     assert.strictEqual(sig.typeString, 'void (i32, i8)');
+    assert(sig.isEqual(sig));
+    assert(!sig.isEqual(b.signature(b.void(), [ b.i(32) ])));
+    assert(!sig.isEqual(b.signature(b.i(32), [ b.i(32), b.i(8) ])));
+    assert(!sig.isEqual(b.signature(b.void(), [ b.i(32), b.i(16) ])));
   });
 
   describe('Array', () => {
     it('should create Array', () => {
-      const sig = b.array(4, b.i(32));
+      const arr = b.array(4, b.i(32));
 
-      assert(sig.isArray());
-      assert.strictEqual(sig.typeString, '[4 x i32]');
+      assert(arr.isArray());
+      assert.strictEqual(arr.typeString, '[4 x i32]');
+      assert(arr.isEqual(arr));
+      assert(!arr.isEqual(b.array(5, b.i(32))));
+      assert(!arr.isEqual(b.array(4, b.i(64))));
     });
 
     it('should not create Array of Void', () => {
       assert.throws(() => b.array(4, b.void()), /Can't create Array of Void/);
     });
+  });
+
+  describe('Struct', () => {
+    it('should create Struct', () => {
+      const s = b.struct();
+
+      assert(s.isStruct());
+      s.addField(b.i(32), 'f1');
+      s.addField(b.i(8), 'f2');
+      s.finalize();
+      assert.strictEqual(s.typeString, '{ i32, i8 }');
+
+      assert(s.isEqual(s));
+
+      const diff1 = b.struct();
+      diff1.addField(b.i(32), 'a1');
+      diff1.finalize();
+      assert(!s.isEqual(diff1));
+
+      const diff2 = b.struct();
+      diff2.addField(b.i(32), 'a1');
+      diff2.addField(b.i(16), 'b2');
+      diff2.finalize();
+      assert(!s.isEqual(diff1));
+    });
+
   });
 
   describe('Pointer', () => {
