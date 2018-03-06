@@ -5,4 +5,4 @@ import { Declaration } from './declaration';
 import { Func } from './function';
 import * as instructions from './instructions';
 
-export { BasicBlock, Func, Value, instructions, constants };
+export { BasicBlock, Declaration, Func, Value, instructions, constants };

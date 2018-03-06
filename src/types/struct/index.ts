@@ -1,4 +1,6 @@
 import * as assert from 'assert';
+import * as values from '../../values';
+
 import { Type } from '../base';
 import { Field } from './field';
 
@@ -40,6 +42,26 @@ export class Struct extends Type {
       toStruct.fields.every((field, i) => field.ty.isEqual(this.fields[i].ty));
   }
 
+  public val(map: { [key: string]: values.constants.Constant })
+    : values.constants.Struct {
+    this.checkFinalized();
+
+    const keys = Object.keys(map);
+    assert.strictEqual(keys.length, this.fields.length,
+      'Invalid key count in `map` argument of `.val()`');
+
+    const fields = new Array(this.fields.length);
+    keys.forEach((key) => {
+      const field = this.lookupField(key);
+      assert(field.ty.isEqual(map[key].ty),
+        `Type mismatch for "${key}" field value`);
+
+      fields[field.index] = map[key];
+    });
+
+    return new values.constants.Struct(this, fields);
+  }
+
   public finalize(): void {
     assert(!this.finalized, 'Double finalization');
     this.finalized = true;
@@ -64,7 +86,7 @@ export class Struct extends Type {
   }
 
   public lookupField(name: string): Field {
-    assert(this.hasField(name));
+    assert(this.hasField(name), `Field "${name}" is unknown`);
     return this.fieldMap.get(name) as Field;
   }
 

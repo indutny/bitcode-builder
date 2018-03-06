@@ -1,4 +1,6 @@
+import { Array } from './array';
 import { Constant } from './base';
 import { Int } from './int';
+import { Struct } from './struct';
 
-export { Constant, Int };
+export { Array, Constant, Int, Struct };
