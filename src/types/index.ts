@@ -1,5 +1,8 @@
 import { Type } from './base';
-import { Func } from './function';
+import { Int } from './int';
 import { Label } from './label';
+import { Pointer } from './pointer';
+import { Signature } from './signature';
+import { Void } from './void';
 
-export { Func, Label, Type };
+export { Int, Label, Pointer, Signature, Type, Void };

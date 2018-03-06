@@ -1,7 +1,7 @@
 import { Type } from './base';
 
-export class Label extends Type {
+export class Void extends Type {
   constructor() {
-    super('label');
+    super('void');
   }
 }

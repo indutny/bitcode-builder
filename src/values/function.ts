@@ -1,8 +1,6 @@
-import { Func as TyFunc } from '../types';
-import { Value } from './base';
+import { BasicBlock } from './basic-block';
+import { Declaration } from './declaration';
 
-export class Func extends Value {
-  constructor(ty: TyFunc) {
-    super(ty);
-  }
+export class Func extends Declaration {
+  public readonly body: BasicBlock = new BasicBlock(this);
 }
