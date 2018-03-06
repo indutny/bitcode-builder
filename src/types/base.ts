@@ -12,4 +12,5 @@ export abstract class Type {
   public isInt(): boolean { return this instanceof types.Int; }
   public isPointer(): boolean { return this instanceof types.Pointer; }
   public isSignature(): boolean { return this instanceof types.Signature; }
+  public isArray(): boolean { return this instanceof types.Array; }
 }

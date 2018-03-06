@@ -28,6 +28,19 @@ describe('bitcode/types', () => {
     assert.strictEqual(sig.typeString, 'void (i32, i8)');
   });
 
+  describe('Array', () => {
+    it('should create Array', () => {
+      const sig = b.array(4, b.i(32));
+
+      assert(sig.isArray());
+      assert.strictEqual(sig.typeString, '[4 x i32]');
+    });
+
+    it('should not create Array of Void', () => {
+      assert.throws(() => b.array(4, b.void()), /Can't create Array of Void/);
+    });
+  });
+
   describe('Pointer', () => {
     it('should not point to Void', () => {
       assert.throws(() => b.void().ptr(), /Can't create pointer to void/);
