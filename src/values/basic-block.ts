@@ -8,7 +8,7 @@ export class BasicBlock extends Value {
   public readonly successors: BasicBlock[] = [];
   public readonly instructions: Instruction[] = [];
 
-  constructor(public readonly fn: Func) {
+  constructor(public readonly parent: Func) {
     super(new Label());
   }
 }

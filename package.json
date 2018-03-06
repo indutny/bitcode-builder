@@ -4,6 +4,9 @@
   "description": "API for building CFG graph for compilation to LLVM bitcode",
   "main": "lib/bitcode.js",
   "types": "lib/bitcode.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "rm -rf lib && tsc",
     "prepublish": "npm run build",

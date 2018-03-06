@@ -1,3 +1,6 @@
+import * as assert from 'assert';
+
+import * as values from '../values';
 import { Type } from './base';
 
 export class Signature extends Type {
@@ -17,5 +20,15 @@ export class Signature extends Type {
     return toSig.returnType.isEqual(this.returnType) &&
       toSig.params.length === this.params.length &&
       toSig.params.every((param, i) => param.isEqual(this.params[i]));
+  }
+
+  public declareFunction(name: string): values.Declaration {
+    return new values.Declaration(this, name);
+  }
+
+  public defineFunction(name: string, paramNames: string[]): values.Func {
+    assert.strictEqual(paramNames.length, this.params.length,
+      'Invalid parameter count for `.defineFunc()`');
+    return new values.Func(this, name, paramNames);
   }
 }
