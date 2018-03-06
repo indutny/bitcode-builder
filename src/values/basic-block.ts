@@ -4,7 +4,7 @@ import { Label, Type } from '../types';
 import { Value } from './base';
 import { Func } from './function';
 import {
-  Binop, BinopType, Cast, CastType, Instruction, Jump, Phi, Ret,
+  Binop, BinopType, Branch, Cast, CastType, Instruction, Jump, Phi, Ret,
 } from './instructions';
 
 export class BasicBlock extends Value {
@@ -24,6 +24,8 @@ export class BasicBlock extends Value {
     return this.push<Phi>(new Phi(ty));
   }
 
+  // Regular instructions
+
   public binop(binopType: BinopType, left: Value, right: Value): Binop {
     return this.push<Binop>(new Binop(binopType, left, right));
   }
@@ -32,12 +34,19 @@ export class BasicBlock extends Value {
     return this.push<Cast>(new Cast(castType, value, targetType));
   }
 
+  // Terminators
+
   public ret(operand: Value | null): Ret {
     return this.terminate<Ret>(new Ret(operand));
   }
 
   public jmp(target: BasicBlock): Jump {
     return this.terminate<Jump>(new Jump(target));
+  }
+
+  public branch(condition: Value, onTrue: BasicBlock,
+                onFalse: BasicBlock): Branch {
+    return this.terminate<Branch>(new Branch(condition, onTrue, onFalse));
   }
 
   private push<T extends Instruction>(instr: T): T {
