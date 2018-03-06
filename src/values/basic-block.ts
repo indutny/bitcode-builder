@@ -3,7 +3,9 @@ import * as assert from 'assert';
 import { Label, Type } from '../types';
 import { Value } from './base';
 import { Func } from './function';
-import { Binop, BinopType, Instruction, Phi, Ret } from './instructions';
+import {
+  Binop, BinopType, Cast, CastType, Instruction, Jump, Phi, Ret,
+} from './instructions';
 
 export class BasicBlock extends Value {
   public readonly predecessors: BasicBlock[] = [];
@@ -26,8 +28,16 @@ export class BasicBlock extends Value {
     return this.push<Binop>(new Binop(binopType, left, right));
   }
 
+  public cast(castType: CastType, value: Value, targetType: Type): Cast {
+    return this.push<Cast>(new Cast(castType, value, targetType));
+  }
+
   public ret(operand: Value | null): Ret {
     return this.terminate<Ret>(new Ret(operand));
+  }
+
+  public jmp(target: BasicBlock): Jump {
+    return this.terminate<Jump>(new Jump(target));
   }
 
   private push<T extends Instruction>(instr: T): T {

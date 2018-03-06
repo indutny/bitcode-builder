@@ -1,5 +1,5 @@
 import * as values from '../';
-import { Type, Void } from '../../types';
+import { Void } from '../../types';
 import { Instruction } from './base';
 
 export class Ret extends Instruction {
