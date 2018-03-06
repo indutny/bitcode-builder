@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "es2017",
+    "module": "commonjs",
+    "pretty": true,
+    "outDir": "./built"
+  },
+  "include": [ "src/*.ts", "src/**/*.ts" ]
+}
