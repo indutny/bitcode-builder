@@ -5,7 +5,7 @@
   "main": "src/bitcode.ts",
   "scripts": {
     "build": "tsc",
-    "lint": "tslint -c tslint.json src/*.ts src/**/*.ts test/*.ts",
+    "lint": "tslint -c tslint.json src/*.ts src/**/*.ts src/**/**/*.ts test/*.ts",
     "test": "mocha -r ts-node/register --reporter spec test/*-test.ts && npm run lint"
   },
   "repository": {

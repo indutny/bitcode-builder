@@ -1,4 +1,7 @@
 import { Type } from './base';
 
-export class Function extends Type {
+export class Func extends Type {
+  constructor(public readonly ret: Type, public readonly params: Type[]) {
+    super();
+  }
 }

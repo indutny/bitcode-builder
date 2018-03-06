@@ -1,8 +1,8 @@
-import { Function as TyFunction } from '../types';
+import { Func as TyFunc } from '../types';
 import { Value } from './base';
 
-export class Function extends Value {
-  constructor(type: TyFunction) {
-    super(type);
+export class Func extends Value {
+  constructor(ty: TyFunc) {
+    super(ty);
   }
 }
