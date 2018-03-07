@@ -8,6 +8,7 @@ import { Declaration } from './declaration';
 export class Func extends Declaration {
   public readonly body: BasicBlock = this.createBlock();
   private readonly paramMap: Map<string, number> = new Map();
+  private blockList: ReadonlyArray<BasicBlock> | null = null;
 
   constructor(signature: Signature, name: string,
               private readonly paramNames: ReadonlyArray<string>) {
@@ -33,5 +34,39 @@ export class Func extends Declaration {
 
     const index = this.paramMap.get(name) as number;
     return new Argument(this.ty.toSignature().params[index], index);
+  }
+
+  public *[Symbol.iterator](): Iterator<BasicBlock> {
+    if (this.blockList !== null) {
+      yield* this.blockList;
+      return;
+    }
+
+    const visited = new Set();
+    const queue = [ this.body ];
+    let canCache = true;
+
+    const list = [];
+    while (queue.length !== 0) {
+      const bb = queue.shift() as BasicBlock;
+      if (visited.has(bb)) {
+        continue;
+      }
+      visited.add(bb);
+
+      if (!bb.isTerminated()) {
+        canCache = false;
+      }
+      list.push(bb);
+      yield bb;
+
+      bb.successors.forEach((succ) => {
+        queue.push(succ);
+      });
+    }
+
+    if (canCache) {
+      this.blockList = list;
+    }
   }
 }

@@ -12,8 +12,8 @@ import {
 } from './instructions';
 
 export class BasicBlock extends Value {
-  protected readonly predecessors: BasicBlock[] = [];
-  protected readonly successors: BasicBlock[] = [];
+  protected readonly privPredecessors: BasicBlock[] = [];
+  protected readonly privSuccessors: BasicBlock[] = [];
   private readonly instructions: Instruction[] = [];
   private readonly phis: Phi[] = [];
   private privTerminator: Instruction | null = null;
@@ -23,7 +23,14 @@ export class BasicBlock extends Value {
     super(new Label());
   }
 
-  public get terminator() { return this.privTerminator; }
+  public get terminator(): Instruction | null { return this.privTerminator; }
+  public isTerminated(): boolean { return this.privTerminator !== null; }
+  public get predecessors(): ReadonlyArray<BasicBlock> {
+    return this.privPredecessors;
+  }
+  public get successors(): ReadonlyArray<BasicBlock> {
+    return this.privSuccessors;
+  }
 
   // Special instructions
 
@@ -111,6 +118,13 @@ export class BasicBlock extends Value {
     return this.terminate<Switch>(new Switch(condition, otherwise, cases));
   }
 
+  public *[Symbol.iterator](): Iterator<Instruction> {
+    yield* this.phis;
+    yield* this.instructions;
+  }
+
+  // Helpers
+
   private push<T extends Instruction>(instr: T): T {
     assert.strictEqual(this.terminator, null,
       'Can\'t push into terminated block');
@@ -126,7 +140,7 @@ export class BasicBlock extends Value {
   }
 
   private addSuccessor(block: BasicBlock) {
-    this.successors.push(block);
-    block.predecessors.push(this);
+    this.privSuccessors.push(block);
+    block.privPredecessors.push(this);
   }
 }
