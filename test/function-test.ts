@@ -29,7 +29,6 @@ describe('bitcode/function', () => {
       assert(fn.ty.isSignature());
       assert(fn.ty.isEqual(sig));
       assert.strictEqual(fn.name, 'some_func');
-      assert.deepStrictEqual(fn.paramNames, [ 'p' ]);
     });
 
     it('should allow populating body', () => {
