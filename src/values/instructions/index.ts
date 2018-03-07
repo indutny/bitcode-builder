@@ -5,6 +5,7 @@ import { Cast, CastType } from './cast';
 import { ExtractValue } from './extractvalue';
 import { GetElementPtr } from './getelementptr';
 import { ICmp, ICmpPredicate } from './icmp';
+import { InsertValue } from './insertvalue';
 import { Jump } from './jump';
 import { Load } from './load';
 import { Phi } from './phi';
@@ -14,6 +15,6 @@ import { ISwitchCase, Switch } from './switch';
 
 export {
   Binop, BinopType, Branch, Cast, CastType, ExtractValue, GetElementPtr,
-  ICmp, ICmpPredicate, Instruction,
+  ICmp, ICmpPredicate, InsertValue, Instruction,
   ISwitchCase, Jump, Load, Phi, Ret, Store, Switch,
 };

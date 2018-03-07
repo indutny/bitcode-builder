@@ -6,7 +6,7 @@ import { Constant } from './constants';
 import { Func } from './function';
 import {
   Binop, BinopType, Branch, Cast, CastType, ExtractValue, GetElementPtr,
-  ICmp, ICmpPredicate, Instruction,
+  ICmp, ICmpPredicate, InsertValue, Instruction,
   ISwitchCase, Jump, Load, Phi, Ret, Store, Switch,
 } from './instructions';
 
@@ -62,6 +62,10 @@ export class BasicBlock extends Value {
 
   public extractvalue(aggr: Value, index: Constant): ExtractValue {
     return this.push<ExtractValue>(new ExtractValue(aggr, index));
+  }
+
+  public insertvalue(aggr: Value, elem: Value, index: Constant): InsertValue {
+    return this.push<InsertValue>(new InsertValue(aggr, elem, index));
   }
 
   // Terminators
