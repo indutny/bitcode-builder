@@ -7,4 +7,8 @@ export abstract class Instruction extends Value {
               protected readonly operands: Value[]) {
     super(ty);
   }
+
+  public *[Symbol.iterator](): Iterator<Value> {
+    yield* this.operands;
+  }
 }
