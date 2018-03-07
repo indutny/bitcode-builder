@@ -38,7 +38,7 @@ export class AttributeList {
         }
 
         assert.strictEqual(entry.value, attr.value,
-          `Conflicting attribute values for "${entry.key}"`);
+          `Conflicting attribute value for "${entry.key}"`);
         return true;
       });
 

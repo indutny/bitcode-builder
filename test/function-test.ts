@@ -42,6 +42,25 @@ describe('bitcode/function', () => {
       bb.ret();
     });
 
+    it('should add attributes', () => {
+      const sig = b.signature(b.void(), [ b.i(32) ]);
+
+      const fn = sig.defineFunction('some_func', [ 'p' ]);
+      assert(fn.attrs.add('noreturn'));
+      assert(!fn.attrs.add('noreturn'));
+      assert(fn.attrs.delete('noreturn'));
+      assert(!fn.attrs.delete('noreturn'));
+
+      assert(fn.attrs.add({ key: 'align', value: 4 }));
+      assert(!fn.attrs.add({ key: 'align', value: 4 }));
+      assert.throws(() => {
+        fn.attrs.add({ key: 'align', value: 2 });
+      }, /Conflicting attribute value for "align"/);
+      assert(fn.attrs.delete({ key: 'align', value: 4 }));
+      assert(!fn.attrs.delete({ key: 'align', value: 4 }));
+      assert(!fn.attrs.delete({ key: 'align', value: 2 }));
+    });
+
     it('should iterate through the blocks/instructions', () => {
       const sig = b.signature(b.i(32), [ b.i(32) ]);
 
