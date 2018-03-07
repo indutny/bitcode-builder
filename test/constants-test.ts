@@ -93,4 +93,21 @@ describe('bitcode/constants', () => {
       assert(!c.isEqual(c1));
     });
   });
+
+  describe('Undef', () => {
+    it('should create Undef constant', () => {
+      const c = b.i(32).ptr().undef();
+
+      assert(c.isUndef());
+    });
+
+    it('should support `.isEqual()`', () => {
+      const c = b.i(32).ptr().undef();
+
+      assert(c.isEqual(c));
+
+      const c1 = b.i(8).ptr().undef();
+      assert(!c.isEqual(c1));
+    });
+  });
 });

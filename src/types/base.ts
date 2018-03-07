@@ -19,6 +19,10 @@ export abstract class Type {
     throw new Error('Not supported');
   }
 
+  public undef(): values.constants.Undef {
+    return new values.constants.Undef(this);
+  }
+
   public isVoid(): boolean { return this instanceof types.Void; }
   public isInt(): boolean { return this instanceof types.Int; }
   public isPointer(): boolean { return this instanceof types.Pointer; }
