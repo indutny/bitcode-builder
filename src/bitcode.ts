@@ -1,4 +1,5 @@
 import * as types from './types';
+import * as values from './values';
 
 export class Bitcode {
   constructor(public sourceName: string | null = null) {
@@ -24,5 +25,12 @@ export class Bitcode {
 
   public struct(name: string | null = null): types.Struct {
     return new types.Struct(name);
+  }
+
+  // Values
+
+  public global(ty: types.Type, name: string, init: values.Value | null = null)
+    : values.Global {
+    return new values.Global(ty, name, init);
   }
 }

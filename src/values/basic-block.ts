@@ -8,13 +8,13 @@ import {
 } from './instructions';
 
 export class BasicBlock extends Value {
-  public readonly predecessors: BasicBlock[] = [];
-  public readonly successors: BasicBlock[] = [];
-  public readonly instructions: Instruction[] = [];
-  public readonly phis: Phi[] = [];
+  protected readonly predecessors: BasicBlock[] = [];
+  protected readonly successors: BasicBlock[] = [];
+  private readonly instructions: Instruction[] = [];
+  private readonly phis: Phi[] = [];
   private privTerminator: Instruction | null = null;
 
-  constructor(public readonly parent: Func) {
+  constructor(public readonly parent: Func, public name: string | null = null) {
     super(new Label());
   }
 
@@ -36,16 +36,25 @@ export class BasicBlock extends Value {
 
   // Terminators
 
-  public ret(operand: Value | null): Ret {
+  public ret(operand: Value | null = null): Ret {
+    const returnType = this.parent.ty.toSignature().returnType;
+    if (operand === null) {
+      assert(returnType.isVoid(), 'Void return from non-Void function');
+    } else {
+      assert(returnType.isEqual(operand.ty), 'Return type mismatch');
+    }
     return this.terminate<Ret>(new Ret(operand));
   }
 
   public jmp(target: BasicBlock): Jump {
+    this.addSuccessor(target);
     return this.terminate<Jump>(new Jump(target));
   }
 
   public branch(condition: Value, onTrue: BasicBlock,
                 onFalse: BasicBlock): Branch {
+    this.addSuccessor(onTrue);
+    this.addSuccessor(onFalse);
     return this.terminate<Branch>(new Branch(condition, onTrue, onFalse));
   }
 
@@ -61,5 +70,10 @@ export class BasicBlock extends Value {
     this.instructions.push(instr);
     this.privTerminator = instr;
     return instr;
+  }
+
+  private addSuccessor(block: BasicBlock) {
+    this.successors.push(block);
+    block.predecessors.push(this);
   }
 }
