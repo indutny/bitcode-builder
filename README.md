@@ -5,7 +5,7 @@
 ## Usage
 
 ```typescript
-const Builder = require('bitcode-builder').Builder;
+import { Builder } from 'bitcode-builder';
 
 const b = new Builder();
 
