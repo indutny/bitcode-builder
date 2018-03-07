@@ -1,5 +1,6 @@
 import * as assert from 'assert';
 
+import { Metadata } from '../metadata';
 import { Signature } from '../types';
 import { Argument } from '../values';
 import { BasicBlock } from './basic-block';
@@ -7,6 +8,8 @@ import { Declaration } from './declaration';
 
 export class Func extends Declaration {
   public readonly body: BasicBlock = this.createBlock();
+  public readonly metadata: Map<string, Metadata> = new Map();
+
   private readonly paramMap: Map<string, number> = new Map();
   private blockList: ReadonlyArray<BasicBlock> | null = null;
 

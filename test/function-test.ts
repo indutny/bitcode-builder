@@ -61,6 +61,15 @@ describe('bitcode/function', () => {
       assert(!fn.attrs.delete({ key: 'align', value: 2 }));
     });
 
+    it('should set metadata', () => {
+      const sig = b.signature(b.void(), [ b.i(32) ]);
+
+      const fn = sig.defineFunction('some_func', [ 'p' ]);
+
+      const m = b.metadata([ 'ohai' ]);
+      fn.metadata.set('prof', b.metadata([ 'hello', m, fn ]));
+    });
+
     it('should iterate through the blocks/instructions', () => {
       const sig = b.signature(b.i(32), [ b.i(32) ]);
 
