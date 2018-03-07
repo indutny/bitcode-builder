@@ -5,7 +5,7 @@ import { Type } from '../base';
 import { Field } from './field';
 
 export class Struct extends Type {
-  public readonly fields: Field[] = [];
+  protected readonly fields: Field[] = [];
   private fieldMap: Map<string, Field> = new Map();
   private finalized: boolean = false;
 

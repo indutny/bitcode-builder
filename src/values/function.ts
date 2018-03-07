@@ -6,7 +6,7 @@ export class Func extends Declaration {
   public readonly body: BasicBlock = this.createBlock();
 
   constructor(signature: Signature, name: string,
-              public readonly paramNames: string[]) {
+              private readonly paramNames: string[]) {
     super(signature, name);
   }
 

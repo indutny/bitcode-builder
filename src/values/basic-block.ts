@@ -14,7 +14,8 @@ export class BasicBlock extends Value {
   private readonly phis: Phi[] = [];
   private privTerminator: Instruction | null = null;
 
-  constructor(public readonly parent: Func, public name: string | null = null) {
+  constructor(private readonly parent: Func,
+              public name: string | null = null) {
     super(new Label());
   }
 
