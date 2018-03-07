@@ -1,3 +1,4 @@
+import * as values from '../values';
 import { Type } from './base';
 
 export class Pointer extends Type {
@@ -13,5 +14,9 @@ export class Pointer extends Type {
 
     const toPtr = to as Pointer;
     return toPtr.to.isEqual(this.to);
+  }
+
+  public val(_: null) {
+    return new values.constants.Null(this);
   }
 }

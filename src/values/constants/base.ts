@@ -9,6 +9,7 @@ export abstract class Constant extends Value {
   public isInt(): boolean { return this instanceof constants.Int; }
   public isArray(): boolean { return this instanceof constants.Array; }
   public isStruct(): boolean { return this instanceof constants.Struct; }
+  public isNull(): boolean { return this instanceof constants.Null; }
 
   public toInt(): constants.Int {
     assert(this.isInt(), 'Constant is not an Int instance');
@@ -22,6 +23,11 @@ export abstract class Constant extends Value {
 
   public toStruct(): constants.Struct {
     assert(this.isStruct(), 'Constant is not a Struct instance');
+    return this as any;
+  }
+
+  public toNull(): constants.Null {
+    assert(this.isNull(), 'Constant is not a Null instance');
     return this as any;
   }
 }

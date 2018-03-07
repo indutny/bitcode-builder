@@ -95,4 +95,21 @@ describe('bitcode/constants', () => {
       assert(!sv.isEqual(sv1));
     });
   });
+
+  describe('Null', () => {
+    it('should create Null constant', () => {
+      const c = b.i(32).ptr().val(null);
+
+      assert(c.isNull());
+    });
+
+    it('should support `.isEqual()`', () => {
+      const c = b.i(32).ptr().val(null);
+
+      assert(c.isEqual(c));
+
+      const c1 = b.i(8).ptr().val(null);
+      assert(!c.isEqual(c1));
+    });
+  });
 });
