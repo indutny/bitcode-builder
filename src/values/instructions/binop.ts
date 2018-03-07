@@ -13,6 +13,8 @@ export class Binop extends Instruction {
               public readonly left: values.Value,
               public readonly right: values.Value) {
     super(left.ty, 'binop', [ left, right ]);
+    assert(left.ty.isInt() && right.ty.isInt(),
+      'Only Int type is supported at the moment');
     assert(left.ty.isEqual(right.ty),
       'Left and right operands of Binop have different types');
   }
