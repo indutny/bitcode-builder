@@ -1,12 +1,13 @@
 import * as assert from 'assert';
 
+import { CallingConv } from '../calling-conv';
 import { Label, Type } from '../types';
 import { Value } from './base';
 import { Constant } from './constants';
 import { Func } from './function';
 import {
-  Binop, BinopType, Branch, Cast, CastType, ExtractValue, GetElementPtr,
-  ICmp, ICmpPredicate, InsertValue, Instruction, IPhiEdge,
+  Binop, BinopType, Branch, Call, CallType, Cast, CastType, ExtractValue,
+  GetElementPtr, ICmp, ICmpPredicate, InsertValue, Instruction, IPhiEdge,
   ISwitchCase, Jump, Load, Phi, Ret, Store, Switch,
 } from './instructions';
 
@@ -72,6 +73,11 @@ export class BasicBlock extends Value {
 
   public insertvalue(aggr: Value, elem: Value, index: Constant): InsertValue {
     return this.push<InsertValue>(new InsertValue(aggr, elem, index));
+  }
+
+  public call(callee: Value, args: ReadonlyArray<Value>,
+              callType: CallType = 'normal', cconv: CallingConv = 'ccc'): Call {
+    return this.push<Call>(new Call(callee, args, callType, cconv));
   }
 
   // Terminators

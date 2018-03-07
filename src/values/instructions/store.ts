@@ -4,7 +4,7 @@ import * as values from '../';
 import { Void } from '../../types';
 import { Instruction } from './base';
 
-// TODO(indutny): separate instruction for atomic load?
+// TODO(indutny): separate instruction for atomic store?
 export class Store extends Instruction {
   constructor(public readonly value: values.Value,
               public readonly ptr: values.Value,

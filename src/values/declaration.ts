@@ -1,14 +1,10 @@
 import * as assert from 'assert';
 
 import { AttributeList } from '../attribute-list';
+import { CallingConv } from '../calling-conv';
 import { Linkage } from '../linkage';
 import { Signature } from '../types';
 import { Value } from './base';
-
-export type CallingConv =
-  'ccc' | 'fastcc' | 'coldcc' | 'webkit_jscc' | 'anyregcc' | 'preserve_mostcc' |
-  'preserve_allcc' | 'swiftcc' | 'cxx_fast_tlscc' | 'x86_stdcallcc' |
-  'x86_fastcallcc' | 'arm_apcscc' | 'arm_aapcscc' | 'arm_aapcs_vfpcc';
 
 export class Declaration extends Value {
   public readonly returnAttrs: AttributeList = new AttributeList();

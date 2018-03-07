@@ -1,6 +1,7 @@
 import { Instruction } from './base';
 import { Binop, BinopType } from './binop';
 import { Branch } from './branch';
+import { Call, CallType } from './call';
 import { Cast, CastType } from './cast';
 import { ExtractValue } from './extractvalue';
 import { GetElementPtr } from './getelementptr';
@@ -14,7 +15,7 @@ import { Store } from './store';
 import { ISwitchCase, Switch } from './switch';
 
 export {
-  Binop, BinopType, Branch, Cast, CastType, ExtractValue, GetElementPtr,
-  ICmp, ICmpPredicate, InsertValue, Instruction, IPhiEdge,
+  Binop, BinopType, Branch, Call, CallType, Cast, CastType, ExtractValue,
+  GetElementPtr, ICmp, ICmpPredicate, InsertValue, Instruction, IPhiEdge,
   ISwitchCase, Jump, Load, Phi, Ret, Store, Switch,
 };
