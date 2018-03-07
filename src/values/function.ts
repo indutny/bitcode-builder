@@ -6,6 +6,7 @@ import { Argument } from '../values';
 import { BasicBlock } from './basic-block';
 import { Declaration } from './declaration';
 
+// TODO(indutny): `.verify()` method
 export class Func extends Declaration {
   public readonly body: BasicBlock = this.createBlock();
   public readonly metadata: Map<string, Metadata> = new Map();
