@@ -14,7 +14,8 @@ export class Global extends Value {
     super(ty);
     assert(ty.isPointer(), 'Can\'t declare global with non-pointer type');
     if (init !== null) {
-      assert(init.ty.isEqual(ty), 'Incompatible type of initialization value');
+      assert(init.ty.isEqual(ty.toPointer().to),
+        'Incompatible type of initialization value for global variable');
     }
   }
 }
