@@ -4,7 +4,8 @@ import { Label, Type } from '../types';
 import { Value } from './base';
 import { Func } from './function';
 import {
-  Binop, BinopType, Branch, Cast, CastType, ICmp, ICmpPredicate, Instruction,
+  Binop, BinopType, Branch, Cast, CastType, GetElementPtr,
+  ICmp, ICmpPredicate, Instruction,
   ISwitchCase, Jump, Load, Phi, Ret, Store, Switch,
 } from './instructions';
 
@@ -49,6 +50,12 @@ export class BasicBlock extends Value {
                isVolatile: boolean = false)
     : Store {
     return this.push<Store>(new Store(value, ptr, alignment, isVolatile));
+  }
+
+  public getelementptr(ptr: Value, ptrIndex: Value, index: Value | null = null,
+                       inbounds: boolean = false): GetElementPtr {
+    return this.push<GetElementPtr>(
+      new GetElementPtr(ptr, ptrIndex, index, inbounds));
   }
 
   // Terminators
