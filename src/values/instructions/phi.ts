@@ -4,7 +4,7 @@ import { Instruction } from './base';
 
 export class Phi extends Instruction {
   constructor(ty: Type) {
-    super(ty, []);
+    super(ty, 'phi', []);
   }
 
   public addEdge(fromBlock: values.BasicBlock, value: values.Value) {

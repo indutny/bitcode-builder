@@ -13,7 +13,7 @@ export class ICmp extends Instruction {
   constructor(public readonly predicate: ICmpPredicate,
               public readonly left: values.Value,
               public readonly right: values.Value) {
-    super(new Int(BOOL_WIDTH), [ left, right ]);
+    super(new Int(BOOL_WIDTH), 'icmp', [ left, right ]);
 
     assert(left.ty.isInt(), 'Only integer types are supported at the moment');
     assert(left.ty.isEqual(right.ty),

@@ -4,6 +4,6 @@ import { Instruction } from './base';
 
 export class Jump extends Instruction {
   constructor(public readonly target: values.BasicBlock) {
-    super(new Void(), [ target ]);
+    super(new Void(), 'jmp', [ target ]);
   }
 }

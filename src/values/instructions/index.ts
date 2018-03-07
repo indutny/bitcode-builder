@@ -4,10 +4,12 @@ import { Branch } from './branch';
 import { Cast, CastType } from './cast';
 import { ICmp, ICmpPredicate } from './icmp';
 import { Jump } from './jump';
+import { Load } from './load';
 import { Phi } from './phi';
 import { Ret } from './ret';
+import { Store } from './store';
 
 export {
-  Binop, BinopType, Branch, Cast, CastType, ICmp, ICmpPredicate, Jump,
-  Instruction, Phi, Ret,
+  Binop, BinopType, Branch, Cast, CastType, ICmp, ICmpPredicate, Instruction,
+  Jump, Load, Phi, Ret, Store,
 };

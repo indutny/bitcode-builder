@@ -9,7 +9,7 @@ export class Branch extends Instruction {
   constructor(public readonly condition: values.Value,
               public readonly onTrue: values.BasicBlock,
               public readonly onFalse: values.BasicBlock) {
-    super(new Void(), [ condition, onTrue, onFalse ]);
+    super(new Void(), 'branch', [ condition, onTrue, onFalse ]);
 
     assert(condition.ty.isInt(), 'Branch `condition` must have Int type');
     assert.strictEqual(condition.ty.toInt().width, BOOL_WIDTH,

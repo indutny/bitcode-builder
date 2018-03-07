@@ -11,7 +11,7 @@ export type CastType = 'trunc' | 'zext' | 'sext' | 'fptoui' | 'fptosi' |
 export class Cast extends Instruction {
   constructor(public readonly castType: CastType, value: values.Value,
               public readonly targetType: Type) {
-    super(targetType, [ value ]);
+    super(targetType, 'cast', [ value ]);
 
     if (castType === 'trunc' || castType === 'zext' || castType === 'sext') {
       assert(value.ty.isInt() && targetType.isInt(),

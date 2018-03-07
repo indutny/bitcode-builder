@@ -5,7 +5,7 @@ import { Value } from './base';
 import { Func } from './function';
 import {
   Binop, BinopType, Branch, Cast, CastType, ICmp, ICmpPredicate, Instruction,
-  Jump, Phi, Ret,
+  Jump, Load, Phi, Ret, Store,
 } from './instructions';
 
 export class BasicBlock extends Value {
@@ -38,6 +38,17 @@ export class BasicBlock extends Value {
 
   public icmp(predicate: ICmpPredicate, left: Value, right: Value): ICmp {
     return this.push<ICmp>(new ICmp(predicate, left, right));
+  }
+
+  public load(ptr: Value, alignment: number | null = null,
+              isVolatile: boolean = false): Load {
+    return this.push<Load>(new Load(ptr, alignment, isVolatile));
+  }
+
+  public store(value: Value, ptr: Value, alignment: number | null = null,
+               isVolatile: boolean = false)
+    : Store {
+    return this.push<Store>(new Store(value, ptr, alignment, isVolatile));
   }
 
   // Terminators
