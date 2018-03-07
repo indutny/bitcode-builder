@@ -8,8 +8,9 @@ import { Load } from './load';
 import { Phi } from './phi';
 import { Ret } from './ret';
 import { Store } from './store';
+import { ISwitchCase, Switch } from './switch';
 
 export {
   Binop, BinopType, Branch, Cast, CastType, ICmp, ICmpPredicate, Instruction,
-  Jump, Load, Phi, Ret, Store,
+  ISwitchCase, Jump, Load, Phi, Ret, Store, Switch,
 };

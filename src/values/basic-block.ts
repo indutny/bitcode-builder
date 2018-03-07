@@ -5,7 +5,7 @@ import { Value } from './base';
 import { Func } from './function';
 import {
   Binop, BinopType, Branch, Cast, CastType, ICmp, ICmpPredicate, Instruction,
-  Jump, Load, Phi, Ret, Store,
+  ISwitchCase, Jump, Load, Phi, Ret, Store, Switch,
 } from './instructions';
 
 export class BasicBlock extends Value {
@@ -73,6 +73,13 @@ export class BasicBlock extends Value {
     this.addSuccessor(onTrue);
     this.addSuccessor(onFalse);
     return this.terminate<Branch>(new Branch(condition, onTrue, onFalse));
+  }
+
+  public switch(condition: Value, otherwise: BasicBlock,
+                cases: ISwitchCase[]): Switch {
+    this.addSuccessor(otherwise);
+    cases.forEach((c) => this.addSuccessor(c.block));
+    return this.terminate<Switch>(new Switch(condition, otherwise, cases));
   }
 
   private push<T extends Instruction>(instr: T): T {
