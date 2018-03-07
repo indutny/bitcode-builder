@@ -2,7 +2,8 @@ import * as types from '../../types';
 import { Constant } from './base';
 
 export class Struct extends Constant {
-  constructor(ty: types.Struct, protected readonly fields: Constant[]) {
+  constructor(ty: types.Struct,
+              public readonly fields: ReadonlyArray<Constant>) {
     super(ty);
   }
 

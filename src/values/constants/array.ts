@@ -2,7 +2,7 @@ import * as types from '../../types';
 import { Constant } from './base';
 
 class ArrayVal<T extends Constant> extends Constant {
-  constructor(ty: types.Array, protected readonly elems: T[]) {
+  constructor(ty: types.Array, public readonly elems: ReadonlyArray<T>) {
     super(ty);
   }
 
