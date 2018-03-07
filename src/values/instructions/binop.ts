@@ -3,7 +3,10 @@ import * as assert from 'assert';
 import * as values from '../';
 import { Instruction } from './base';
 
-export type BinopType = 'add' | 'mul';
+// TODO(indutny): floating point
+export type BinopType =
+  'add' | 'sub' | 'mul' | 'udiv' | 'sdiv' | 'urem' | 'srem' | 'shl' | 'lshr' |
+  'ashr' | 'and' | 'or' | 'xor';
 
 export class Binop extends Instruction {
   constructor(public readonly binopType: BinopType,

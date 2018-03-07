@@ -1,10 +1,9 @@
 import * as assert from 'assert';
 
 import * as values from '../';
+import { BOOL_WIDTH } from '../../constants';
 import { Void } from '../../types';
 import { Instruction } from './base';
-
-const BOOL_WIDTH = 1;
 
 export class Branch extends Instruction {
   constructor(public readonly condition: values.Value,

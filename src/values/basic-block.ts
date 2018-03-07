@@ -4,7 +4,8 @@ import { Label, Type } from '../types';
 import { Value } from './base';
 import { Func } from './function';
 import {
-  Binop, BinopType, Branch, Cast, CastType, Instruction, Jump, Phi, Ret,
+  Binop, BinopType, Branch, Cast, CastType, ICmp, ICmpPredicate, Instruction,
+  Jump, Phi, Ret,
 } from './instructions';
 
 export class BasicBlock extends Value {
@@ -33,6 +34,10 @@ export class BasicBlock extends Value {
 
   public cast(castType: CastType, value: Value, targetType: Type): Cast {
     return this.push<Cast>(new Cast(castType, value, targetType));
+  }
+
+  public icmp(predicate: ICmpPredicate, left: Value, right: Value): ICmp {
+    return this.push<ICmp>(new ICmp(predicate, left, right));
   }
 
   // Terminators
