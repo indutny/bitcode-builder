@@ -90,6 +90,11 @@ export class Struct extends Type {
     return this.fieldMap.get(name) as Field;
   }
 
+  public getField(index: number): Field {
+    assert(0 <= index && index < this.fields.length, 'Invalid field index');
+    return this.fields[index];
+  }
+
   protected checkFinalized(): void {
     assert(this.finalized,
       'Please call `.finalize()` on the Struct instance first');

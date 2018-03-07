@@ -2,9 +2,10 @@ import * as assert from 'assert';
 
 import { Label, Type } from '../types';
 import { Value } from './base';
+import { Constant } from './constants';
 import { Func } from './function';
 import {
-  Binop, BinopType, Branch, Cast, CastType, GetElementPtr,
+  Binop, BinopType, Branch, Cast, CastType, ExtractValue, GetElementPtr,
   ICmp, ICmpPredicate, Instruction,
   ISwitchCase, Jump, Load, Phi, Ret, Store, Switch,
 } from './instructions';
@@ -52,10 +53,15 @@ export class BasicBlock extends Value {
     return this.push<Store>(new Store(value, ptr, alignment, isVolatile));
   }
 
-  public getelementptr(ptr: Value, ptrIndex: Value, index: Value | null = null,
+  public getelementptr(ptr: Value, ptrIndex: Value,
+                       index: Constant | null = null,
                        inbounds: boolean = false): GetElementPtr {
     return this.push<GetElementPtr>(
       new GetElementPtr(ptr, ptrIndex, index, inbounds));
+  }
+
+  public extractvalue(aggr: Value, index: Constant): ExtractValue {
+    return this.push<ExtractValue>(new ExtractValue(aggr, index));
   }
 
   // Terminators

@@ -33,16 +33,6 @@ describe('bitcode/constants', () => {
 
       assert(c.isArray());
       assert.strictEqual(c.ty.typeString, '[3 x i32]');
-      assert.strictEqual(c.elems.length, 3);
-
-      assert.strictEqual(c.elems[0].ty.typeString, 'i32');
-      assert.strictEqual(c.elems[0].value, 1);
-
-      assert.strictEqual(c.elems[1].ty.typeString, 'i32');
-      assert.strictEqual(c.elems[1].value, 2);
-
-      assert.strictEqual(c.elems[2].ty.typeString, 'i32');
-      assert.strictEqual(c.elems[2].value, 3);
     });
 
     it('should support `.isEqual()`', () => {
@@ -71,15 +61,6 @@ describe('bitcode/constants', () => {
 
       assert(sv.isStruct());
       assert.strictEqual(sv.ty.typeString, '{ i32, i8 }');
-      assert.strictEqual(sv.fields.length, 2);
-
-      assert.strictEqual(sv.fields[0].ty.typeString, 'i32');
-      assert(sv.fields[0].isInt());
-      assert.strictEqual(sv.fields[0].toInt().value, 1);
-
-      assert.strictEqual(sv.fields[1].ty.typeString, 'i8');
-      assert(sv.fields[1].isInt());
-      assert.strictEqual(sv.fields[1].toInt().value, 2);
     });
 
     it('should support `.isEqual()`', () => {
