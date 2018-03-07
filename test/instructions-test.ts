@@ -12,6 +12,40 @@ describe('bitcode/instructions', () => {
     fn = sig.defineFunction('some_func', [ 'a', 'b', 'c', 'p' ]);
   });
 
+  describe('phi', () => {
+    it('should be created with type', () => {
+      const i = fn.body.phi(b.i(8));
+      assert.strictEqual(i.opcode, 'phi');
+      assert(i.ty.isEqual(b.i(8)));
+    });
+
+    it('should be created with edge', () => {
+      const bb = fn.createBlock('named');
+
+      const i = fn.body.phi({ fromBlock: bb, value: b.i(8).val(1) });
+      assert.strictEqual(i.opcode, 'phi');
+      assert(i.ty.isEqual(b.i(8)));
+    });
+
+    it('should check type for new edges', () => {
+      const bb = fn.createBlock('named');
+
+      const i = fn.body.phi({ fromBlock: bb, value: b.i(8).val(1) });
+      assert.strictEqual(i.opcode, 'phi');
+      assert(i.ty.isEqual(b.i(8)));
+
+      const bb1 = fn.createBlock('named1');
+      assert.doesNotThrow(() => {
+        i.addEdge({ fromBlock: bb1, value: b.i(8).val(2) });
+      });
+
+      const bb2 = fn.createBlock('named2');
+      assert.throws(() => {
+        i.addEdge({ fromBlock: bb2, value: b.i(16).val(2) });
+      }, /Type mismatch for Phi edge/);
+    });
+  });
+
   describe('binop', () => {
     it('should be created', () => {
       const i = fn.body.binop('add', fn.getArgument('a'), fn.getArgument('b'));
