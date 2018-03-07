@@ -1,8 +1,8 @@
 import * as assert from 'assert';
-import { Bitcode, values } from '../';
+import { Builder, values } from '../';
 
 describe('bitcode/instructions', () => {
-  const b = new Bitcode();
+  const b = new Builder();
   let fn: values.Func;
 
   beforeEach(() => {

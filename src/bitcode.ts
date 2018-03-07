@@ -4,7 +4,7 @@ import { Linkage } from './linkage';
 import * as types from './types';
 import * as values from './values';
 
-export class Bitcode {
+export class Builder {
   constructor(public sourceName: string | null = null) {
   }
 

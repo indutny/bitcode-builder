@@ -1,10 +1,10 @@
 import * as assert from 'assert';
-import { Bitcode } from '../';
+import { Builder } from '../';
 
 describe('bitcode/types', () => {
-  let b: Bitcode;
+  let b: Builder;
   beforeEach(() => {
-    b = new Bitcode();
+    b = new Builder();
   });
 
   it('should create Void', () => {
