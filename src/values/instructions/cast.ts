@@ -16,6 +16,14 @@ export class Cast extends Instruction {
     if (castType === 'trunc' || castType === 'zext' || castType === 'sext') {
       assert(value.ty.isInt() && targetType.isInt(),
         `Invalid types for \`${castType}\` cast`);
+
+      if (castType === 'trunc') {
+        assert(value.ty.toInt().width >= targetType.toInt().width,
+          '`trunc` should reduce bit width`');
+      } else {
+        assert(value.ty.toInt().width <= targetType.toInt().width,
+          '`zext`/`sext` should extend bit width`');
+      }
     } else if (castType === 'ptrtoint') {
       assert(value.ty.isPointer() && targetType.isInt(),
         'Invalid types for `ptrtoint` cast');
