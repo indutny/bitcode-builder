@@ -4,7 +4,9 @@
     "target": "es2017",
     "module": "commonjs",
     "outDir": "./lib",
-    "declaration": true
+    "declaration": true,
+    "pretty": true,
+    "sourceMap": true
   },
   "include": [
     "src/*.ts", "src/**/*.ts", "src/**/**/*.ts", "src/**/**/**/*.ts"
