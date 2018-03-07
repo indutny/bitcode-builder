@@ -16,15 +16,16 @@ export class BasicBlock extends Value {
   protected readonly privSuccessors: BasicBlock[] = [];
   private readonly instructions: Instruction[] = [];
   private readonly phis: Phi[] = [];
-  private privTerminator: Instruction | null = null;
+  private privTerminator: Instruction | undefined = undefined;
 
-  constructor(private readonly parent: Func,
-              public name: string | null = null) {
+  constructor(private readonly parent: Func, public name?: string) {
     super(new Label());
   }
 
-  public get terminator(): Instruction | null { return this.privTerminator; }
-  public isTerminated(): boolean { return this.privTerminator !== null; }
+  public get terminator(): Instruction | undefined {
+    return this.privTerminator;
+  }
+  public isTerminated(): boolean { return this.privTerminator !== undefined; }
   public get predecessors(): ReadonlyArray<BasicBlock> {
     return this.privPredecessors;
   }
@@ -35,7 +36,7 @@ export class BasicBlock extends Value {
   // Special instructions
 
   public phi(edgeOrTy: Type | IPhiEdge): Phi {
-    assert.strictEqual(this.terminator, null,
+    assert.strictEqual(this.terminator, undefined,
       'Can\'t push into terminated block');
     const phi = new Phi(edgeOrTy);
     this.phis.push(phi);
@@ -56,19 +57,18 @@ export class BasicBlock extends Value {
     return this.push<ICmp>(new ICmp(predicate, left, right));
   }
 
-  public load(ptr: Value, alignment: number | null = null,
-              isVolatile: boolean = false): Load {
+  public load(ptr: Value, alignment?: number, isVolatile: boolean = false)
+    : Load {
     return this.push<Load>(new Load(ptr, alignment, isVolatile));
   }
 
-  public store(value: Value, ptr: Value, alignment: number | null = null,
+  public store(value: Value, ptr: Value, alignment?: number,
                isVolatile: boolean = false)
     : Store {
     return this.push<Store>(new Store(value, ptr, alignment, isVolatile));
   }
 
-  public getelementptr(ptr: Value, ptrIndex: Value,
-                       index: Constant | null = null,
+  public getelementptr(ptr: Value, ptrIndex: Value, index?: Constant,
                        inbounds: boolean = false): GetElementPtr {
     return this.push<GetElementPtr>(
       new GetElementPtr(ptr, ptrIndex, index, inbounds));
@@ -89,9 +89,9 @@ export class BasicBlock extends Value {
 
   // Terminators
 
-  public ret(operand: Value | null = null): Ret {
+  public ret(operand?: Value): Ret {
     const returnType = this.parent.ty.toSignature().returnType;
-    if (operand === null) {
+    if (operand === undefined) {
       assert(returnType.isVoid(), 'Void return from non-Void function');
     } else {
       assert(returnType.isEqual(operand.ty), 'Return type mismatch');
@@ -126,14 +126,14 @@ export class BasicBlock extends Value {
   // Helpers
 
   private push<T extends Instruction>(instr: T): T {
-    assert.strictEqual(this.terminator, null,
+    assert.strictEqual(this.terminator, undefined,
       'Can\'t push into terminated block');
     this.instructions.push(instr);
     return instr;
   }
 
   private terminate<T extends Instruction>(instr: T): T {
-    assert.strictEqual(this.terminator, null, 'Block already terminated');
+    assert.strictEqual(this.terminator, undefined, 'Block already terminated');
     this.instructions.push(instr);
     this.privTerminator = instr;
     return instr;

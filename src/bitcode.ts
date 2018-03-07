@@ -6,7 +6,7 @@ import * as types from './types';
 import * as values from './values';
 
 export class Builder {
-  constructor(public sourceName: string | null = null) {
+  constructor(public sourceName?: string) {
   }
 
   // Types
@@ -27,13 +27,13 @@ export class Builder {
     return new types.Array(length, elemType);
   }
 
-  public struct(name: string | null = null): types.Struct {
+  public struct(name?: string): types.Struct {
     return new types.Struct(name);
   }
 
   // Values
 
-  public global(ty: types.Type, name: string, init: values.Value | null = null)
+  public global(ty: types.Type, name: string, init?: values.Value)
     : values.Global {
     return new values.Global(ty, name, init);
   }

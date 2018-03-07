@@ -61,7 +61,7 @@ export class AttributeList {
       return true;
     }
 
-    let foundAt: number | null = null;
+    let foundAt: number | boolean = false;
     this.list.some((entry, i) => {
       if (typeof entry === 'string') {
         return false;
@@ -77,7 +77,7 @@ export class AttributeList {
       return true;
     });
 
-    if (foundAt === null) {
+    if (foundAt === false) {
       return false;
     }
 

@@ -8,7 +8,7 @@ import { Instruction } from './base';
 export class Store extends Instruction {
   constructor(public readonly value: values.Value,
               public readonly ptr: values.Value,
-              public readonly alignment: number | null = null,
+              public readonly alignment?: number,
               public readonly isVolatile: boolean = false) {
     super(new Void(), 'store', [ value, ptr ]);
   }

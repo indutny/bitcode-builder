@@ -3,10 +3,10 @@ import { Instruction } from './base';
 import { getAggrFieldType } from './common';
 
 function getElementPtrType(value: values.Value,
-                           index: values.constants.Constant | null) {
+                           index?: values.constants.Constant) {
   const ptr = value.ty.toPointer();
 
-  if (index === null) {
+  if (index === undefined) {
     return ptr.to;
   }
 
@@ -18,11 +18,11 @@ function getElementPtrType(value: values.Value,
 export class GetElementPtr extends Instruction {
   constructor(public readonly ptr: values.Value,
               public readonly ptrIndex: values.Value,
-              public readonly index: values.constants.Constant | null = null,
+              public readonly index?: values.constants.Constant,
               public readonly inbounds: boolean = false) {
     super(
       getElementPtrType(ptr, index),
       'getelementptr',
-      index === null ? [ ptr, ptrIndex ] : [ ptr, ptrIndex, index ]);
+      index === undefined ? [ ptr, ptrIndex ] : [ ptr, ptrIndex, index ]);
   }
 }

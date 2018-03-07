@@ -12,7 +12,7 @@ export class Func extends Declaration {
   public readonly metadata: Map<string, Metadata> = new Map();
 
   private readonly paramMap: Map<string, number> = new Map();
-  private blockList: ReadonlyArray<BasicBlock> | null = null;
+  private blockList: ReadonlyArray<BasicBlock> | undefined = undefined;
 
   constructor(signature: Signature, name: string,
               private readonly paramNames: ReadonlyArray<string>) {
@@ -29,7 +29,7 @@ export class Func extends Declaration {
     });
   }
 
-  public createBlock(name: string | null = null) {
+  public createBlock(name?: string) {
     return new BasicBlock(this, name);
   }
 
@@ -41,7 +41,7 @@ export class Func extends Declaration {
   }
 
   public *[Symbol.iterator](): Iterator<BasicBlock> {
-    if (this.blockList !== null) {
+    if (this.blockList !== undefined) {
       yield* this.blockList;
       return;
     }

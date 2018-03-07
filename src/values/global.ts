@@ -10,10 +10,10 @@ export class Global extends Value {
   public linkage: Linkage = 'external';
 
   constructor(ty: Type, public readonly name: string,
-              private readonly init: Value | null = null) {
+              private readonly init?: Value) {
     super(ty);
     assert(ty.isPointer(), 'Can\'t declare global with non-pointer type');
-    if (init !== null) {
+    if (init !== undefined) {
       assert(init.ty.isEqual(ty.toPointer().to),
         'Incompatible type of initialization value for global variable');
     }

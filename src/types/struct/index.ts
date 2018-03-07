@@ -9,13 +9,13 @@ export class Struct extends Type {
   private fieldMap: Map<string, Field> = new Map();
   private finalized: boolean = false;
 
-  constructor(public readonly name: string | null) {
+  constructor(public readonly name?: string) {
     super('struct');
   }
 
   public get typeString(): string {
     // Named struct
-    if (this.name !== null) {
+    if (this.name !== undefined) {
       this.checkFinalized();
       return `%${this.name}`;
     }
