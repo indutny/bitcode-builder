@@ -5,10 +5,13 @@ import { Type } from './base';
 
 export class Signature extends Type {
   constructor(public readonly returnType: Type,
-              public readonly params: Type[]) {
+              private readonly params: Type[]) {
     super(`${returnType.typeString} ` +
       `(${params.map((p) => p.typeString).join(', ')})`);
   }
+
+  public get paramCount(): number { return this.params.length; }
+  public getParam(index: number): Type { return this.params[index]; }
 
   public isEqual(to: Type): boolean {
     if (!to.isSignature()) {

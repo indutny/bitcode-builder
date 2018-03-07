@@ -21,7 +21,11 @@ export class Declaration extends Value {
   constructor(signature: Signature, public readonly name: string) {
     super(signature);
 
-    this.paramAttrs = signature.params.map(() => new AttributeList());
+    this.paramAttrs = [];
+    const paramCount = signature.paramCount;
+    for (let i = 0; i < paramCount; i++) {
+      this.paramAttrs.push(new AttributeList());
+    }
   }
 
   public getParamAttrList(index: number): AttributeList {

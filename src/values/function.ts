@@ -12,7 +12,7 @@ export class Func extends Declaration {
   constructor(signature: Signature, name: string,
               private readonly paramNames: string[]) {
     super(signature, name);
-    assert.strictEqual(paramNames.length, signature.params.length,
+    assert.strictEqual(paramNames.length, signature.paramCount,
       'Invalid number of parameter names, doesn\'t match signature');
 
     paramNames.forEach((paramName, i) => {
@@ -32,6 +32,6 @@ export class Func extends Declaration {
     assert(this.paramMap.has(name), `Unknown parameter name: "${name}"`);
 
     const index = this.paramMap.get(name) as number;
-    return new Argument(this.ty.toSignature().params[index], index);
+    return new Argument(this.ty.toSignature().getParam(index), index);
   }
 }
