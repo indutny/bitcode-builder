@@ -1,10 +1,9 @@
 import * as assert from 'assert';
-import { Bitcode } from '../';
-import { Func } from '../lib/values/function';
+import { Bitcode, values } from '../';
 
 describe('bitcode/instructions', () => {
   const b = new Bitcode();
-  let fn: Func;
+  let fn: values.Func;
 
   beforeEach(() => {
     const sig = b.signature(b.void(),

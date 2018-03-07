@@ -1,3 +1,6 @@
+import { Attribute } from './attribute-list';
+import { CallingConv } from './calling-conv';
+import { Linkage } from './linkage';
 import * as types from './types';
 import * as values from './values';
 
@@ -34,3 +37,5 @@ export class Bitcode {
     return new values.Global(ty, name, init);
   }
 }
+
+export { types, values, Attribute, CallingConv, Linkage };
