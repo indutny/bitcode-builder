@@ -12,7 +12,10 @@ describe('bitcode/instructions', () => {
   describe('binop', () => {
     it('should be created', () => {
       const fn = createFn();
-      fn.body.binop('add', fn.getArgument('a'), fn.getArgument('b'));
+      const i = fn.body.binop('add', fn.getArgument('a'), fn.getArgument('b'));
+      assert.strictEqual(i.opcode, 'binop');
+      assert.strictEqual(i.binopType, 'add');
+      assert(i.ty.isEqual(fn.getArgument('a').ty));
     });
 
     it('should check that operands are of Int type', () => {
