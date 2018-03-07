@@ -6,9 +6,6 @@ import * as types from './types';
 import * as values from './values';
 
 export class Builder {
-  constructor(public sourceName?: string) {
-  }
-
   // Types
 
   public void(): types.Void {

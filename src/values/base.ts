@@ -5,23 +5,23 @@ export abstract class Value {
   constructor(public readonly ty: Type) {
   }
 
-  public isBasicBlock(): boolean {
+  public isBasicBlock(): this is values.BasicBlock {
     return this instanceof values.BasicBlock;
   }
 
-  public isDeclaration(): boolean {
+  public isDeclaration(): this is values.Declaration {
     return this instanceof values.Declaration;
   }
 
-  public isFunction(): boolean {
+  public isFunction(): this is values.Func {
     return this instanceof values.Func;
   }
 
-  public isConst(): boolean {
+  public isConst(): this is values.constants.Constant {
     return this instanceof values.constants.Constant;
   }
 
-  public isInstruction(): boolean {
+  public isInstruction(): this is values.instructions.Instruction {
     return this instanceof values.instructions.Instruction;
   }
 }

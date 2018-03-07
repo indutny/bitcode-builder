@@ -23,12 +23,24 @@ export abstract class Type {
     return new values.constants.Undef(this);
   }
 
-  public isVoid(): boolean { return this instanceof types.Void; }
-  public isInt(): boolean { return this instanceof types.Int; }
-  public isPointer(): boolean { return this instanceof types.Pointer; }
-  public isSignature(): boolean { return this instanceof types.Signature; }
-  public isStruct(): boolean { return this instanceof types.Struct; }
-  public isArray(): boolean { return this instanceof types.Array; }
+  public isVoid(): this is types.Void { return this instanceof types.Void; }
+  public isInt(): this is types.Int { return this instanceof types.Int; }
+
+  public isPointer(): this is types.Pointer {
+    return this instanceof types.Pointer;
+  }
+
+  public isSignature(): this is types.Signature {
+    return this instanceof types.Signature;
+  }
+
+  public isStruct(): this is types.Struct {
+    return this instanceof types.Struct;
+  }
+
+  public isArray(): this is types.Array {
+    return this instanceof types.Array;
+  }
 
   public toInt(): types.Int {
     assert(this.isInt(), 'Type is not an Int instance');
