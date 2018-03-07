@@ -2,7 +2,25 @@
 [![Build Status](https://secure.travis-ci.org/indutny/bitcode-builder.svg)](http://travis-ci.org/indutny/bitcode-builder)
 [![NPM version](https://badge.fury.io/js/bitcode-builder.svg)](https://badge.fury.io/js/bitcode-builder)
 
-WIP
+## Usage
+
+```typescript
+const Builder = require('bitcode-builder').Builder;
+
+const b = new Builder();
+
+const i32 = b.i(32);
+const sig = b.signature(i32, [ i32, i32 ]);
+
+const fn = sig.defineFunction(sig, [ 'param1', 'param2' ]);
+
+const sum = fn.body.binop('add',
+                          fn.getArgument('param1'),
+                          fn.getArgument('param2'));
+fn.body.ret(sum);
+
+// Pass `fn` to `bitcode` module (WIP)
+```
 
 #### LICENSE
 
