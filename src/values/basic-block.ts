@@ -6,7 +6,7 @@ import { Constant } from './constants';
 import { Func } from './function';
 import {
   Binop, BinopType, Branch, Cast, CastType, ExtractValue, GetElementPtr,
-  ICmp, ICmpPredicate, InsertValue, Instruction,
+  ICmp, ICmpPredicate, InsertValue, Instruction, IPhiEdge,
   ISwitchCase, Jump, Load, Phi, Ret, Store, Switch,
 } from './instructions';
 
@@ -24,8 +24,14 @@ export class BasicBlock extends Value {
 
   public get terminator() { return this.privTerminator; }
 
-  public phi(ty: Type): Phi {
-    return this.push<Phi>(new Phi(ty));
+  // Special instructions
+
+  public phi(edgeOrTy: Type | IPhiEdge): Phi {
+    assert.strictEqual(this.terminator, null,
+      'Can\'t push into terminated block');
+    const phi = new Phi(edgeOrTy);
+    this.phis.push(phi);
+    return phi;
   }
 
   // Regular instructions

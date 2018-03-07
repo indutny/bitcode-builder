@@ -8,13 +8,13 @@ import { ICmp, ICmpPredicate } from './icmp';
 import { InsertValue } from './insertvalue';
 import { Jump } from './jump';
 import { Load } from './load';
-import { Phi } from './phi';
+import { IPhiEdge, Phi } from './phi';
 import { Ret } from './ret';
 import { Store } from './store';
 import { ISwitchCase, Switch } from './switch';
 
 export {
   Binop, BinopType, Branch, Cast, CastType, ExtractValue, GetElementPtr,
-  ICmp, ICmpPredicate, InsertValue, Instruction,
+  ICmp, ICmpPredicate, InsertValue, Instruction, IPhiEdge,
   ISwitchCase, Jump, Load, Phi, Ret, Store, Switch,
 };
