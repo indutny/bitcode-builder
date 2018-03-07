@@ -1,3 +1,4 @@
+import { Argument } from './argument';
 import { Value } from './base';
 import { BasicBlock } from './basic-block';
 import * as constants from './constants';
@@ -7,5 +8,6 @@ import { Global } from './global';
 import * as instructions from './instructions';
 
 export {
-  BasicBlock, Declaration, Func, Global, Value, instructions, constants,
+  Argument, BasicBlock, Declaration, Func, Global, Value, instructions,
+  constants,
 };
