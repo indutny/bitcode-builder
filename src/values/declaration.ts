@@ -12,16 +12,12 @@ export class Declaration extends Value {
   public linkage: Linkage = 'external';
   public cconv: CallingConv = 'ccc';
 
-  private readonly paramAttrs: AttributeList[];
+  private readonly paramAttrs: ReadonlyArray<AttributeList>;
 
   constructor(signature: Signature, public readonly name: string) {
     super(signature);
 
-    this.paramAttrs = [];
-    const paramCount = signature.paramCount;
-    for (let i = 0; i < paramCount; i++) {
-      this.paramAttrs.push(new AttributeList());
-    }
+    this.paramAttrs = signature.params.map(() => new AttributeList());
   }
 
   public getParamAttrList(index: number): AttributeList {

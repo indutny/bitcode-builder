@@ -30,6 +30,10 @@ export class Struct extends Type {
     return '{ ' + this.fields.map((f) => f.ty.typeString).join(', ') + ' }';
   }
 
+  public get fieldCount(): number {
+    return this.fields.length;
+  }
+
   public isEqual(to: Type): boolean {
     this.checkFinalized();
     if (!to.isStruct()) {
