@@ -11,6 +11,10 @@ export class Signature extends Type {
   }
 
   public isEqual(to: Type): boolean {
+    if (this === to) {
+      return true;
+    }
+
     if (!to.isSignature()) {
       return false;
     }

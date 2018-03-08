@@ -8,6 +8,10 @@ export class Pointer extends Type {
   }
 
   public isEqual(to: Type): boolean {
+    if (this === to) {
+      return true;
+    }
+
     if (!to.isPointer()) {
       return false;
     }

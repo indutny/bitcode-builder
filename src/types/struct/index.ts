@@ -34,6 +34,10 @@ export class Struct extends Type {
 
   public isEqual(to: Type): boolean {
     this.checkFinalized();
+    if (this === to) {
+      return true;
+    }
+
     if (!to.isStruct()) {
       return false;
     }

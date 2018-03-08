@@ -7,6 +7,10 @@ export class Int extends Type {
   }
 
   public isEqual(to: Type): boolean {
+    if (this === to) {
+      return true;
+    }
+
     if (!to.isInt()) {
       return false;
     }

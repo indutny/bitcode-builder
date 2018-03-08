@@ -11,6 +11,10 @@ class ArrayTy extends Type {
   }
 
   public isEqual(to: Type): boolean {
+    if (this === to) {
+      return true;
+    }
+
     if (!to.isArray()) {
       return false;
     }
