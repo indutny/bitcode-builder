@@ -10,7 +10,7 @@ export class Global extends Value {
   public linkage: Linkage = 'external';
 
   constructor(ty: Type, public readonly name: string,
-              private readonly init?: Value) {
+              public readonly init?: Value) {
     super(ty);
     assert(ty.isPointer(), 'Can\'t declare global with non-pointer type');
     if (init !== undefined) {
