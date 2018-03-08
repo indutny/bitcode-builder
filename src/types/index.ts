@@ -1,13 +1,9 @@
-import { Array } from './array';
-import { Type } from './base';
-import { Int } from './int';
-import { Label } from './label';
-import { Metadata } from './metadata';
-import { Pointer } from './pointer';
-import { Signature } from './signature';
-import { Field, Struct } from './struct';
-import { Void } from './void';
-
-export {
-  Array, Field, Int, Label, Metadata, Pointer, Signature, Struct, Type, Void,
-};
+export { Array } from './array';
+export { Type } from './base';
+export { Int } from './int';
+export { Label } from './label';
+export { Metadata } from './metadata';
+export { Pointer } from './pointer';
+export { Signature } from './signature';
+export { Field, Struct } from './struct';
+export { Void } from './void';

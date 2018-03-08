@@ -1,10 +1,9 @@
-import { Argument } from './argument';
-import { Value } from './base';
-import { BasicBlock } from './basic-block';
 import * as constants from './constants';
-import { Global } from './global';
 import * as instructions from './instructions';
 
-export {
-  Argument, BasicBlock, Global, Value, instructions, constants,
-};
+export { Argument } from './argument';
+export { Value } from './base';
+export { BasicBlock } from './basic-block';
+export { Global } from './global';
+
+export { constants, instructions };
