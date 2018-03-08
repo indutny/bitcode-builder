@@ -48,6 +48,11 @@ export abstract class Type {
     return this as any;
   }
 
+  public toLabel(): types.Label {
+    assert(this.isLabel(), 'Type is not a Label instance');
+    return this as any;
+  }
+
   public toPointer(): types.Pointer {
     assert(this.isPointer(), 'Type is not a Pointer instance');
     return this as any;
