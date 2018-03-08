@@ -5,7 +5,7 @@ import { Type } from '../base';
 import { Field } from './field';
 
 export class Struct extends Type {
-  protected readonly fields: Field[] = [];
+  private readonly privFields: Field[] = [];
   private fieldMap: Map<string, Field> = new Map();
   private finalized: boolean = false;
 
@@ -30,9 +30,7 @@ export class Struct extends Type {
     return '{ ' + this.fields.map((f) => f.ty.typeString).join(', ') + ' }';
   }
 
-  public get fieldCount(): number {
-    return this.fields.length;
-  }
+  public get fields(): ReadonlyArray<Field> { return this.privFields; }
 
   public isEqual(to: Type): boolean {
     this.checkFinalized();
@@ -79,8 +77,8 @@ export class Struct extends Type {
       return existing;
     }
 
-    const add = new Field(ty, name, this.fields.length);
-    this.fields.push(add);
+    const add = new Field(ty, name, this.privFields.length);
+    this.privFields.push(add);
     this.fieldMap.set(name, add);
     return add;
   }
@@ -104,3 +102,5 @@ export class Struct extends Type {
       'Please call `.finalize()` on the Struct instance first');
   }
 }
+
+export { Field };
