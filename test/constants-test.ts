@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { Builder } from '../';
+import { Builder } from '../src/bitcode';
 
 describe('bitcode/constants', () => {
   let b: Builder;

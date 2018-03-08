@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { Builder, values } from '../';
+import { Builder, values } from '../src/bitcode';
 
 describe('bitcode/instructions', () => {
   const b = new Builder();
