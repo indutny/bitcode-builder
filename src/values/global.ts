@@ -10,6 +10,7 @@ import { Constant } from './constants';
 export class Global extends Value {
   public attrs: AttributeList = new AttributeList();
   public linkage: Linkage = 'external';
+  private privIsConstant: boolean = false;
 
   constructor(ty: Type, public readonly name: string,
               public readonly init?: Constant) {
@@ -20,5 +21,14 @@ export class Global extends Value {
       assert(init.ty.isEqual(ty.toPointer().to),
         'Incompatible type of initialization value for global variable');
     }
+  }
+
+  public isConstant(): boolean { return this.privIsConstant; }
+
+  public markConstant(): void {
+    assert(this.init !== undefined,
+      'Can\'t mark global without init value as constant');
+
+    this.privIsConstant = true;
   }
 }
