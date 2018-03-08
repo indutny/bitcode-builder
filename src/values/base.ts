@@ -19,7 +19,7 @@ export abstract class Value {
     return this instanceof values.BasicBlock;
   }
 
-  public isConst(): boolean {
+  public isConstant(): boolean {
     return this instanceof values.constants.Constant;
   }
 
@@ -42,8 +42,8 @@ export abstract class Value {
     return this as any;
   }
 
-  public toConst(): values.constants.Constant {
-    assert(this.isConst(), 'Value is not an Constant instance');
+  public toConstant(): values.constants.Constant {
+    assert(this.isConstant(), 'Value is not an Constant instance');
     return this as any;
   }
 

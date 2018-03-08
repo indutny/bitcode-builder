@@ -27,7 +27,7 @@ export class Call extends Instruction {
               public readonly cconv: CallingConv = 'ccc') {
     super(getCallType(callee), 'call', [ callee ].concat(args));
 
-    if (!callee.isConst()) {
+    if (!callee.isConstant()) {
       return;
     }
 
