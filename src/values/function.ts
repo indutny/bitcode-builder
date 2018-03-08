@@ -8,11 +8,11 @@ import { Declaration } from './declaration';
 
 // TODO(indutny): `.verify()` method
 export class Func extends Declaration {
+  public readonly args: ReadonlyArray<Argument>;
   public readonly body: BasicBlock = this.createBlock();
   public readonly metadata: Map<string, Metadata> = new Map();
 
   private readonly paramMap: Map<string, number> = new Map();
-  private readonly args: ReadonlyArray<Argument>;
   private blockList: ReadonlyArray<BasicBlock> | undefined = undefined;
 
   constructor(signature: Signature, name: string,
