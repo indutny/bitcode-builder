@@ -25,6 +25,7 @@ export abstract class Type {
 
   public isVoid(): this is types.Void { return this instanceof types.Void; }
   public isInt(): this is types.Int { return this instanceof types.Int; }
+  public isLabel(): this is types.Label { return this instanceof types.Label; }
 
   public isPointer(): this is types.Pointer {
     return this instanceof types.Pointer;
