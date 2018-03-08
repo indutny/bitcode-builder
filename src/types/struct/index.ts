@@ -76,7 +76,7 @@ export class Struct extends Type {
   public addField(ty: Type, name: string): Field {
     assert(!this.finalized, 'Can\'t add fields after `.finalize()` call');
     if (this.fieldMap.has(name)) {
-      const existing = this.fieldMap.get(name) as Field;
+      const existing = this.fieldMap.get(name)!;
       assert(existing.ty.isEqual(ty), 'Conflicting field types for: ' + name);
       return existing;
     }
@@ -93,7 +93,7 @@ export class Struct extends Type {
 
   public lookupField(name: string): Field {
     assert(this.hasField(name), `Field "${name}" is unknown`);
-    return this.fieldMap.get(name) as Field;
+    return this.fieldMap.get(name)!;
   }
 
   public getField(index: number): Field {

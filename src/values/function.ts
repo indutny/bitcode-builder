@@ -41,7 +41,7 @@ export class Func extends Declaration {
   public getArgument(name: string): Argument {
     assert(this.paramMap.has(name), `Unknown parameter name: "${name}"`);
 
-    const index = this.paramMap.get(name) as number;
+    const index = this.paramMap.get(name)!;
     return this.args[index];
   }
 
