@@ -11,16 +11,13 @@ class ArrayTy extends Type {
   }
 
   public isEqual(to: Type): boolean {
-    if (this === to) {
-      return true;
-    }
-
     if (!to.isArray()) {
       return false;
     }
 
-    return to.length === this.length &&
-      to.elemType.isEqual(this.elemType);
+    const toArray = to as ArrayTy;
+    return toArray.length === this.length &&
+      toArray.elemType.isEqual(this.elemType);
   }
 
   public val<T extends values.constants.Constant>(elems: T[])

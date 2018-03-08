@@ -34,17 +34,14 @@ export class Struct extends Type {
 
   public isEqual(to: Type): boolean {
     this.checkFinalized();
-    if (this === to) {
-      return true;
-    }
-
     if (!to.isStruct()) {
       return false;
     }
 
-    to.checkFinalized();
-    return to.fields.length === this.fields.length &&
-      to.fields.every((field, i) => field.ty.isEqual(this.fields[i].ty));
+    const toStruct = to as Struct;
+    toStruct.checkFinalized();
+    return toStruct.fields.length === this.fields.length &&
+      toStruct.fields.every((field, i) => field.ty.isEqual(this.fields[i].ty));
   }
 
   public val(map: { [key: string]: values.constants.Constant })
