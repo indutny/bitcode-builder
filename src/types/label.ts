@@ -6,6 +6,10 @@ export class Label extends Type {
   }
 
   public isEqual(to: Type): boolean {
-    return true;
+    if (this === to) {
+      return true;
+    }
+
+    return false;
   }
 }

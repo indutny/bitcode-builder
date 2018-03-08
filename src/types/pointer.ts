@@ -8,12 +8,15 @@ export class Pointer extends Type {
   }
 
   public isEqual(to: Type): boolean {
+    if (this === to) {
+      return true;
+    }
+
     if (!to.isPointer()) {
       return false;
     }
 
-    const toPtr = to as Pointer;
-    return toPtr.to.isEqual(this.to);
+    return to.to.isEqual(this.to);
   }
 
   public val(_: null) {

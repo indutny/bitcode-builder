@@ -7,12 +7,15 @@ export class Int extends Type {
   }
 
   public isEqual(to: Type): boolean {
+    if (this === to) {
+      return true;
+    }
+
     if (!to.isInt()) {
       return false;
     }
 
-    const toInt = to as Int;
-    return toInt.width === this.width;
+    return to.width === this.width;
   }
 
   public val(num: number): values.constants.Int {

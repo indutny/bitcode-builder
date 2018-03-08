@@ -11,15 +11,17 @@ export class Signature extends Type {
   }
 
   public isEqual(to: Type): boolean {
+    if (this === to) {
+      return true;
+    }
+
     if (!to.isSignature()) {
       return false;
     }
 
-    const toSig = to as Signature;
-
-    return toSig.returnType.isEqual(this.returnType) &&
-      toSig.params.length === this.params.length &&
-      toSig.params.every((param, i) => param.isEqual(this.params[i]));
+    return to.returnType.isEqual(this.returnType) &&
+      to.params.length === this.params.length &&
+      to.params.every((param, i) => param.isEqual(this.params[i]));
   }
 
   public declareFunction(name: string): values.Declaration {
