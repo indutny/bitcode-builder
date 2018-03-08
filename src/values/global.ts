@@ -4,13 +4,14 @@ import { AttributeList } from '../attribute-list';
 import { Linkage } from '../linkage';
 import { Type } from '../types';
 import { Value } from './base';
+import { Constant } from './constants';
 
 export class Global extends Value {
   public attrs: AttributeList = new AttributeList();
   public linkage: Linkage = 'external';
 
   constructor(ty: Type, public readonly name: string,
-              public readonly init?: Value) {
+              public readonly init?: Constant) {
     super(ty);
     assert(ty.isPointer(), 'Can\'t declare global with non-pointer type');
     if (init !== undefined) {

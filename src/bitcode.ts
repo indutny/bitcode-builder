@@ -30,7 +30,7 @@ export class Builder {
 
   // Values
 
-  public global(ty: types.Type, name: string, init?: values.Value)
+  public global(ty: types.Type, name: string, init?: values.constants.Constant)
     : values.Global {
     return new values.Global(ty, name, init);
   }
