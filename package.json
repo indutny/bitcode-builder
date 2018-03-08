@@ -1,6 +1,6 @@
 {
   "name": "bitcode-builder",
-  "version": "1.0.0-beta5",
+  "version": "1.0.0-beta6",
   "description": "API for building CFG graph for compilation to LLVM bitcode",
   "main": "lib/bitcode.js",
   "types": "lib/bitcode.d.ts",
