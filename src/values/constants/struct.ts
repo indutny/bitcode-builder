@@ -8,6 +8,10 @@ export class Struct extends Constant {
   }
 
   public isEqual(to: Constant): boolean {
+    if (this === to) {
+      return true;
+    }
+
     if (!to.isStruct()) {
       return false;
     }

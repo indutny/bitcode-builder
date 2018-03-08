@@ -20,7 +20,7 @@ export class Pointer extends Type {
     return toPtr.to.isEqual(this.to);
   }
 
-  public val(_: null) {
+  public val(_: null): values.constants.Null {
     return new values.constants.Null(this);
   }
 }

@@ -27,8 +27,13 @@ export class Call extends Instruction {
               public readonly cconv: CallingConv = 'ccc') {
     super(getCallType(callee), 'call', [ callee ].concat(args));
 
-    if (callee.isDeclaration()) {
-      const calleeFn = callee as values.Declaration;
+    if (!callee.isConst()) {
+      return;
+    }
+
+    const constCallee = callee as values.constants.Constant;
+    if (constCallee.isDeclaration()) {
+      const calleeFn = constCallee as values.constants.Declaration;
       assert.strictEqual(this.cconv, calleeFn.cconv,
         'Calling convention mismatch');
     }

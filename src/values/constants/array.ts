@@ -7,6 +7,10 @@ class ArrayVal<T extends Constant> extends Constant {
   }
 
   public isEqual(to: Constant): boolean {
+    if (this === to) {
+      return true;
+    }
+
     if (!to.isArray() || !to.ty.isEqual(this.ty)) {
       return false;
     }

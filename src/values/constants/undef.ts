@@ -7,6 +7,10 @@ export class Undef extends Constant {
   }
 
   public isEqual(to: Constant): boolean {
+    if (this === to) {
+      return true;
+    }
+
     if (!to.isUndef()) {
       return false;
     }

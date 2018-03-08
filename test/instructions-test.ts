@@ -3,7 +3,7 @@ import { Builder, values } from '../src/bitcode';
 
 describe('bitcode/instructions', () => {
   const b = new Builder();
-  let fn: values.Func;
+  let fn: values.constants.Func;
 
   beforeEach(() => {
     const sig = b.signature(b.void(),

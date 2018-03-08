@@ -26,6 +26,7 @@ export abstract class Type {
   public isVoid(): boolean { return this instanceof types.Void; }
   public isInt(): boolean { return this instanceof types.Int; }
   public isLabel(): boolean { return this instanceof types.Label; }
+  public isMetadata(): boolean { return this instanceof types.Metadata; }
   public isPointer(): boolean { return this instanceof types.Pointer; }
   public isSignature(): boolean { return this instanceof types.Signature; }
   public isStruct(): boolean { return this instanceof types.Struct; }
@@ -43,6 +44,11 @@ export abstract class Type {
 
   public toLabel(): types.Label {
     assert(this.isLabel(), 'Type is not a Label instance');
+    return this as any;
+  }
+
+  public toMetadata(): types.Metadata {
+    assert(this.isMetadata(), 'Type is not a Metadata instance');
     return this as any;
   }
 

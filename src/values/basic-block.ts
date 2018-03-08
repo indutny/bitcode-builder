@@ -3,8 +3,7 @@ import * as assert from 'assert';
 import { CallingConv } from '../calling-conv';
 import { Label, Type } from '../types';
 import { Value } from './base';
-import { Constant } from './constants';
-import { Func } from './function';
+import { Constant, Func } from './constants';
 import {
   Binop, BinopType, Branch, Call, CallType, Cast, CastType, ExtractValue,
   GetElementPtr, ICmp, ICmpPredicate, InsertValue, Instruction, IPhiEdge,

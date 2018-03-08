@@ -7,6 +7,10 @@ export class Null extends Constant {
   }
 
   public isEqual(to: Constant): boolean {
+    if (this === to) {
+      return true;
+    }
+
     if (!to.isNull()) {
       return false;
     }

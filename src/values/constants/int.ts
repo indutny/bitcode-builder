@@ -7,6 +7,10 @@ export class Int extends Constant {
   }
 
   public isEqual(to: Constant): boolean {
+    if (this === to) {
+      return true;
+    }
+
     if (!to.isInt() || !to.ty.isEqual(this.ty)) {
       return false;
     }

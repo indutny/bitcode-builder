@@ -5,16 +5,16 @@ export abstract class Value {
   constructor(public readonly ty: Type) {
   }
 
+  public isArgument(): boolean {
+    return this instanceof values.Argument;
+  }
+
+  public isGlobal(): boolean {
+    return this instanceof values.Global;
+  }
+
   public isBasicBlock(): boolean {
     return this instanceof values.BasicBlock;
-  }
-
-  public isDeclaration(): boolean {
-    return this instanceof values.Declaration;
-  }
-
-  public isFunction(): boolean {
-    return this instanceof values.Func;
   }
 
   public isConst(): boolean {

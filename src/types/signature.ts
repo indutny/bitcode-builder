@@ -26,13 +26,14 @@ export class Signature extends Type {
       toSig.params.every((param, i) => param.isEqual(this.params[i]));
   }
 
-  public declareFunction(name: string): values.Declaration {
-    return new values.Declaration(this, name);
+  public declareFunction(name: string): values.constants.Declaration {
+    return new values.constants.Declaration(this, name);
   }
 
-  public defineFunction(name: string, paramNames: string[]): values.Func {
+  public defineFunction(name: string, paramNames: string[])
+    : values.constants.Func {
     assert.strictEqual(paramNames.length, this.params.length,
       'Invalid parameter count for `.defineFunc()`');
-    return new values.Func(this, name, paramNames);
+    return new values.constants.Func(this, name, paramNames);
   }
 }

@@ -1,6 +1,6 @@
-import { Metadata } from '../../metadata';
 import { Type } from '../../types';
 import { Value } from '../base';
+import { Metadata } from '../constants';
 
 export abstract class Instruction extends Value {
   public readonly metadata: Map<string, Metadata> = new Map();

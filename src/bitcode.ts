@@ -1,7 +1,6 @@
 import { Attribute } from './attribute-list';
 import { CallingConv } from './calling-conv';
 import { Linkage } from './linkage';
-import { Metadata } from './metadata';
 import * as types from './types';
 import * as values from './values';
 
@@ -37,10 +36,10 @@ export class Builder {
 
   // Metadata
 
-  public metadata(value: ReadonlyArray<string | values.Value | Metadata>)
-    : Metadata {
-    return new Metadata(value);
+  public metadata(value: values.constants.MetadataValue)
+    : values.constants.Metadata {
+    return new values.constants.Metadata(value);
   }
 }
 
-export { types, values, Attribute, CallingConv, Linkage, Metadata };
+export { types, values, Attribute, CallingConv, Linkage };
