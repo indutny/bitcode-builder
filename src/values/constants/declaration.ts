@@ -1,7 +1,10 @@
+import * as assert from 'assert';
+
 import { AttributeList } from '../../attribute-list';
 import { CallingConv } from '../../calling-conv';
 import { Linkage } from '../../linkage';
 import { Signature } from '../../types';
+import { validateName } from '../../utils';
 import { Constant } from './base';
 
 export class Declaration extends Constant {
@@ -14,6 +17,8 @@ export class Declaration extends Constant {
   constructor(signature: Signature, public readonly name: string) {
     super(signature);
 
+    assert(validateName(name),
+      `Invalid characters in function name: "${name}"`);
     this.paramAttrs = signature.params.map(() => new AttributeList());
   }
 

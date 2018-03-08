@@ -1,6 +1,7 @@
 import * as assert from 'assert';
 
 import { Signature } from '../../types';
+import { validateName } from '../../utils';
 import { Argument, BasicBlock } from '../../values';
 import { Declaration } from './declaration';
 import { Metadata } from './metadata';
@@ -25,6 +26,8 @@ export class Func extends Declaration {
         throw new Error(`Duplicate parameter name: "${paramName}"`);
       }
 
+      assert(validateName(paramName),
+        `Invalid characters in parameter name: "${paramName}"`);
       this.paramMap.set(paramName, i);
     });
 

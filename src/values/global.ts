@@ -1,4 +1,5 @@
 import * as assert from 'assert';
+import { validateName } from '../utils';
 
 import { AttributeList } from '../attribute-list';
 import { Linkage } from '../linkage';
@@ -14,6 +15,7 @@ export class Global extends Value {
               public readonly init?: Constant) {
     super(ty);
     assert(ty.isPointer(), 'Can\'t declare global with non-pointer type');
+    assert(validateName(name), `Invalid characters in Global name: "${name}"`);
     if (init !== undefined) {
       assert(init.ty.isEqual(ty.toPointer().to),
         'Incompatible type of initialization value for global variable');

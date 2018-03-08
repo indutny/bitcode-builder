@@ -1,4 +1,5 @@
 import * as assert from 'assert';
+import { validateName } from '../../utils';
 import * as values from '../../values';
 
 import { Type } from '../base';
@@ -11,6 +12,10 @@ export class Struct extends Type {
 
   constructor(public readonly name?: string) {
     super('struct');
+    if (name !== undefined) {
+      assert(validateName(name),
+        `Invalid characters in Struct name: "${name}"`);
+    }
   }
 
   public get typeString(): string {
@@ -74,6 +79,9 @@ export class Struct extends Type {
   }
 
   public addField(ty: Type, name: string): Field {
+    assert(validateName(name),
+      `Invalid characters in struct field name: "${name}"`);
+
     assert(!this.finalized, 'Can\'t add fields after `.finalize()` call');
     if (this.fieldMap.has(name)) {
       const existing = this.fieldMap.get(name)!;

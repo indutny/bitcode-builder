@@ -1,4 +1,5 @@
 import * as assert from 'assert';
+import { validateName } from '../utils';
 
 import { CallingConv } from '../calling-conv';
 import { Label, Type } from '../types';
@@ -19,6 +20,9 @@ export class BasicBlock extends Value {
 
   constructor(private readonly parent: Func, public name?: string) {
     super(new Label());
+    if (name !== undefined) {
+      assert(validateName(name), `Invalid characters in Block name: "${name}"`);
+    }
   }
 
   public get terminator(): Instruction | undefined {
