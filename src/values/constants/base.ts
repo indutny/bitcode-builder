@@ -6,23 +6,23 @@ import * as constants from './';
 export abstract class Constant extends Value {
   public abstract isEqual(to: Constant): boolean;
 
-  public isInt(): this is constants.Int {
+  public isInt(): boolean {
     return this instanceof constants.Int;
   }
 
-  public isArray(): this is constants.Array<Constant> {
+  public isArray(): boolean {
     return this instanceof constants.Array;
   }
 
-  public isStruct(): this is constants.Struct {
+  public isStruct(): boolean {
     return this instanceof constants.Struct;
   }
 
-  public isNull(): this is constants.Null {
+  public isNull(): boolean {
     return this instanceof constants.Null;
   }
 
-  public isUndef(): this is constants.Undef {
+  public isUndef(): boolean {
     return this instanceof constants.Undef;
   }
 
