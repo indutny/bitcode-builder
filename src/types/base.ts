@@ -31,6 +31,11 @@ export abstract class Type {
   public isStruct(): boolean { return this instanceof types.Struct; }
   public isArray(): boolean { return this instanceof types.Array; }
 
+  public toVoid(): types.Void {
+    assert(this.isVoid(), 'Type is not a Void instance');
+    return this as any;
+  }
+
   public toInt(): types.Int {
     assert(this.isInt(), 'Type is not an Int instance');
     return this as any;
