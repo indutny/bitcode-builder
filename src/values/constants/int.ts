@@ -2,6 +2,7 @@ import * as types from '../../types';
 import { Constant } from './base';
 
 export class Int extends Constant {
+  // TODO(indutny): 64bit values through Array, or Int64 class?
   constructor(ty: types.Int, public readonly value: number) {
     super(ty);
   }
