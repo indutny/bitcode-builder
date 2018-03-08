@@ -12,6 +12,7 @@ export class Func extends Declaration {
   public readonly metadata: Map<string, Metadata> = new Map();
 
   private readonly paramMap: Map<string, number> = new Map();
+  private readonly args: ReadonlyArray<Argument>;
   private blockList: ReadonlyArray<BasicBlock> | undefined = undefined;
 
   constructor(signature: Signature, name: string,
@@ -27,6 +28,10 @@ export class Func extends Declaration {
 
       this.paramMap.set(paramName, i);
     });
+
+    this.args = signature.params.map((param, i) => {
+      return new Argument(param, i);
+    });
   }
 
   public createBlock(name?: string) {
@@ -37,7 +42,7 @@ export class Func extends Declaration {
     assert(this.paramMap.has(name), `Unknown parameter name: "${name}"`);
 
     const index = this.paramMap.get(name) as number;
-    return new Argument(this.ty.toSignature().params[index], index);
+    return this.args[index];
   }
 
   public *[Symbol.iterator](): Iterator<BasicBlock> {
