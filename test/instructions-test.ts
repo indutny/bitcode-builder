@@ -14,6 +14,8 @@ describe('bitcode/instructions', () => {
   describe('phi', () => {
     it('should be created with type', () => {
       const i = fn.body.phi(b.i(8));
+      assert(i.isPhi());
+
       assert.strictEqual(i.opcode, 'phi');
       assert(i.ty.isEqual(b.i(8)));
     });
