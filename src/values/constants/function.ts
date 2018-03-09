@@ -16,7 +16,7 @@ export class Func extends Declaration {
   private blockList: ReadonlyArray<BasicBlock> | undefined = undefined;
 
   constructor(signature: Signature, name: string,
-              private readonly paramNames: ReadonlyArray<string>) {
+              public readonly paramNames: ReadonlyArray<string>) {
     super(signature, name);
     assert.strictEqual(paramNames.length, signature.params.length,
       'Invalid number of parameter names, doesn\'t match signature');
