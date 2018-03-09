@@ -4,41 +4,70 @@ import { Linkage } from './linkage';
 import * as types from './types';
 import * as values from './values';
 
+import Type = types.Type;
+import Constant = values.constants.Constant;
+
 export class Builder {
   // Types
 
-  public void(): types.Void {
+  public static void(): types.Void {
     return new types.Void();
   }
 
-  public i(width: number): types.Int {
+  public static i(width: number): types.Int {
     return new types.Int(width);
   }
 
-  public signature(ret: types.Type, params: types.Type[]): types.Signature {
-    return new types.Signature(ret, params);
+  public static signature(returnType: Type, params: Type[]): types.Signature {
+    return new types.Signature(returnType, params);
   }
 
-  public array(length: number, elemType: types.Type): types.Array {
+  public static array(length: number, elemType: Type): types.Array {
     return new types.Array(length, elemType);
   }
 
-  public struct(name?: string): types.Struct {
+  public static struct(name?: string): types.Struct {
     return new types.Struct(name);
   }
 
   // Values
 
-  public global(ty: types.Type, name: string, init?: values.constants.Constant)
+  public static global(ty: types.Type, name: string, init?: Constant)
     : values.Global {
     return new values.Global(ty, name, init);
   }
 
   // Metadata
 
-  public metadata(value: values.constants.MetadataValue)
+  public static metadata(value: values.constants.MetadataValue)
     : values.constants.Metadata {
     return new values.constants.Metadata(value);
+  }
+
+  // Convenience methods
+
+  public void(): types.Void { return Builder.void(); }
+
+  public i(width: number): types.Int { return Builder.i(width); }
+
+  public signature(returnType: Type, params: Type[]): types.Signature {
+    return Builder.signature(returnType, params);
+  }
+
+  public array(length: number, elemType: Type): types.Array {
+    return Builder.array(length, elemType);
+  }
+
+  public struct(name?: string): types.Struct { return Builder.struct(name); }
+
+  public global(ty: types.Type, name: string, init?: values.constants.Constant)
+    : values.Global {
+    return Builder.global(ty, name, init);
+  }
+
+  public metadata(value: values.constants.MetadataValue)
+    : values.constants.Metadata {
+    return Builder.metadata(value);
   }
 }
 
