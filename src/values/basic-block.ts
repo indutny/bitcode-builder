@@ -8,7 +8,7 @@ import { Constant, Func } from './constants';
 import {
   Binop, BinopType, Branch, Call, CallType, Cast, CastType, ExtractValue,
   GetElementPtr, ICmp, ICmpPredicate, InsertValue, Instruction, IPhiEdge,
-  ISwitchCase, Jump, Load, Phi, Ret, Store, Switch,
+  ISwitchCase, Jump, Load, Phi, Ret, Store, Switch, Unreachable,
 } from './instructions';
 
 export class BasicBlock extends Value {
@@ -119,6 +119,10 @@ export class BasicBlock extends Value {
     this.addSuccessor(otherwise);
     cases.forEach((c) => this.addSuccessor(c.block));
     return this.terminate<Switch>(new Switch(condition, otherwise, cases));
+  }
+
+  public unreachable(): Unreachable {
+    return this.terminate<Unreachable>(new Unreachable());
   }
 
   public *[Symbol.iterator](): Iterator<Instruction> {

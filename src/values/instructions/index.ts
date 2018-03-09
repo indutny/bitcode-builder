@@ -13,3 +13,4 @@ export { IPhiEdge, Phi } from './phi';
 export { Ret } from './ret';
 export { Store } from './store';
 export { ISwitchCase, Switch } from './switch';
+export { Unreachable } from './unreachable';
