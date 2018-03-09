@@ -23,7 +23,7 @@ export class Global extends Value {
     }
   }
 
-  public isConstant(): boolean { return this.privIsConstant; }
+  public hasConstantValue(): boolean { return this.privIsConstant; }
 
   public markConstant(): void {
     assert(this.init !== undefined,
