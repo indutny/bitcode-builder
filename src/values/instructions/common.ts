@@ -3,18 +3,14 @@ import * as assert from 'assert';
 import * as values from '../';
 import { Type } from '../../types';
 
-export function getAggrFieldType(aggrTy: Type,
-                                 index: values.constants.Constant): Type {
-  assert(index.isInt(), 'Expected integer constant offset for `extractvalue`');
-  const intIndex = index.toInt().value;
-
+export function getAggrFieldType(aggrTy: Type, index: number): Type {
   if (aggrTy.isStruct()) {
-    const field = aggrTy.toStruct().getField(intIndex);
+    const field = aggrTy.toStruct().getField(index);
 
     return field.ty;
   } else if (aggrTy.isArray()) {
     const arrayTy = aggrTy.toArray();
-    assert(0 <= intIndex && intIndex < arrayTy.length,
+    assert(0 <= index && index < arrayTy.length,
       'OOB array index in `extractvalue`');
 
     return arrayTy.elemType;

@@ -93,11 +93,11 @@ export class BasicBlock extends Value {
       new GetElementPtr(ptr, ptrIndex, index, inbounds));
   }
 
-  public extractvalue(aggr: Value, index: Constant): ExtractValue {
+  public extractvalue(aggr: Value, index: number): ExtractValue {
     return this.push<ExtractValue>(new ExtractValue(aggr, index));
   }
 
-  public insertvalue(aggr: Value, elem: Value, index: Constant): InsertValue {
+  public insertvalue(aggr: Value, elem: Value, index: number): InsertValue {
     return this.push<InsertValue>(new InsertValue(aggr, elem, index));
   }
 

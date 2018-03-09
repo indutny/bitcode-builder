@@ -8,8 +8,8 @@ import { getAggrFieldType } from './common';
 export class InsertValue extends Instruction {
   constructor(public readonly aggr: values.Value,
               public readonly element: values.Value,
-              public readonly index: values.constants.Constant) {
-    super(aggr.ty, 'insertvalue', [ aggr, element, index ]);
+              public readonly index: number) {
+    super(aggr.ty, 'insertvalue', [ aggr, element ]);
 
     const fieldType = getAggrFieldType(aggr.ty, index);
     assert(fieldType.isEqual(element.ty),

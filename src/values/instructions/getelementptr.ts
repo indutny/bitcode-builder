@@ -1,3 +1,5 @@
+import * as assert from 'assert';
+
 import * as values from '../';
 import { Instruction } from './base';
 import { getAggrFieldType } from './common';
@@ -10,7 +12,8 @@ function getElementPtrType(value: values.Value,
     return ptr;
   }
 
-  return getAggrFieldType(ptr.to, index).ptr();
+  assert(index.isInt(), 'Expected integer constant offset for `extractvalue`');
+  return getAggrFieldType(ptr.to, index.toInt().value).ptr();
 }
 
 // TODO(indutny): support `inrange`
