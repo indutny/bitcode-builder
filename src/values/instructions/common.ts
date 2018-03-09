@@ -22,3 +22,9 @@ export function getAggrFieldType(aggrTy: Type,
     throw new Error('Expected aggregate type, but got: ' + aggrTy.typeString);
   }
 }
+
+export function checkAlignment(alignment: number): void {
+  assert(1 < alignment, 'Alignment must be greater than zero if present');
+  assert.strictEqual(alignment, Math.pow(2, Math.floor(Math.log2(alignment))),
+    'Alignment must be a power of two if present');
+}
