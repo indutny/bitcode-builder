@@ -9,29 +9,30 @@ export type CastType = 'trunc' | 'zext' | 'sext' | 'fptoui' | 'fptosi' |
   'bitcast' | 'addrspacecast';
 
 export class Cast extends Instruction {
-  constructor(public readonly castType: CastType, value: values.Value,
+  constructor(public readonly castType: CastType,
+              public readonly operand: values.Value,
               public readonly targetType: Type) {
-    super(targetType, 'cast', [ value ]);
+    super(targetType, 'cast', [ operand ]);
 
     if (castType === 'trunc' || castType === 'zext' || castType === 'sext') {
-      assert(value.ty.isInt() && targetType.isInt(),
+      assert(operand.ty.isInt() && targetType.isInt(),
         `Invalid types for \`${castType}\` cast`);
 
       if (castType === 'trunc') {
-        assert(value.ty.toInt().width >= targetType.toInt().width,
+        assert(operand.ty.toInt().width >= targetType.toInt().width,
           '`trunc` should reduce bit width`');
       } else {
-        assert(value.ty.toInt().width <= targetType.toInt().width,
+        assert(operand.ty.toInt().width <= targetType.toInt().width,
           '`zext`/`sext` should extend bit width`');
       }
     } else if (castType === 'ptrtoint') {
-      assert(value.ty.isPointer() && targetType.isInt(),
+      assert(operand.ty.isPointer() && targetType.isInt(),
         'Invalid types for `ptrtoint` cast');
     } else if (castType === 'inttoptr') {
-      assert(value.ty.isInt() && targetType.isPointer(),
+      assert(operand.ty.isInt() && targetType.isPointer(),
         'Invalid types for `inttoptr` cast');
     } else if (castType === 'bitcast') {
-      assert(value.ty.isPointer() && targetType.isPointer(),
+      assert(operand.ty.isPointer() && targetType.isPointer(),
         'Invalid types for `bitcast` cast');
     } else {
       throw new Error(`Sorry, but \`${castType}\` cast is not implemented yet`);
