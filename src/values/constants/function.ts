@@ -32,7 +32,7 @@ export class Func extends Declaration {
     });
 
     this.args = signature.params.map((param, i) => {
-      return new Argument(param, i);
+      return new Argument(param, i, this.paramNames[i]);
     });
   }
 
