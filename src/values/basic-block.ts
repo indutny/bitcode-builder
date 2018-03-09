@@ -17,21 +17,37 @@ export class BasicBlock extends Value {
   private readonly instructions: Instruction[] = [];
   private readonly phis: Phi[] = [];
   private privTerminator: Instruction | undefined = undefined;
+  private privName: string | undefined = undefined;
 
-  constructor(private readonly parent: Func, public name?: string) {
+  constructor(private readonly parent: Func, name?: string) {
     super(new Label());
     if (name !== undefined) {
-      assert(validateName(name), `Invalid characters in Block name: "${name}"`);
+      this.name = name;
     }
+  }
+
+  public get name(): string | undefined {
+    return this.privName;
+  }
+
+  public set name(value: string | undefined) {
+    if (value !== undefined) {
+      assert(validateName(value),
+        `Invalid characters in Block name: "${value}"`);
+    }
+    this.privName = value;
   }
 
   public get terminator(): Instruction | undefined {
     return this.privTerminator;
   }
+
   public isTerminated(): boolean { return this.privTerminator !== undefined; }
+
   public get predecessors(): ReadonlyArray<BasicBlock> {
     return this.privPredecessors;
   }
+
   public get successors(): ReadonlyArray<BasicBlock> {
     return this.privSuccessors;
   }
