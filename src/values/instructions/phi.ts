@@ -10,6 +10,8 @@ export interface IPhiEdge {
 }
 
 export class Phi extends Instruction {
+  private readonly privEdges: IPhiEdge[] = [];
+
   constructor(edgeOrTy: IPhiEdge | Type) {
     super(edgeOrTy instanceof Type ? edgeOrTy : edgeOrTy.value.ty, 'phi', []);
 
@@ -18,9 +20,14 @@ export class Phi extends Instruction {
     }
   }
 
+  public get edges(): ReadonlyArray<IPhiEdge> {
+    return this.privEdges;
+  }
+
   public addEdge(edge: IPhiEdge) {
     assert(this.ty.isEqual(edge.value.ty), 'Type mismatch for Phi edge');
 
     this.operands.push(edge.fromBlock, edge.value);
+    this.privEdges.push(edge);
   }
 }
