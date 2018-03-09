@@ -138,4 +138,12 @@ describe('bitcode/instructions', () => {
       }, /Invalid types/);
     });
   });
+
+  describe('getelementptr', () => {
+    it('should be created', () => {
+      const i = fn.body.getelementptr(fn.getArgument('p'), b.i(32).val(1));
+      assert.strictEqual(i.opcode, 'getelementptr');
+      assert(i.ty.isEqual(b.i(8).ptr()));
+    });
+  });
 });

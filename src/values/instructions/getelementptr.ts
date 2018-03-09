@@ -7,10 +7,10 @@ function getElementPtrType(value: values.Value,
   const ptr = value.ty.toPointer();
 
   if (index === undefined) {
-    return ptr.to;
+    return ptr;
   }
 
-  return getAggrFieldType(ptr.to, index);
+  return getAggrFieldType(ptr.to, index).ptr();
 }
 
 // TODO(indutny): support `inrange`
