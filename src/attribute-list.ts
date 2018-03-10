@@ -104,4 +104,8 @@ export class AttributeList {
     this.list.splice(foundAt, 1);
     return true;
   }
+
+  public *[Symbol.iterator](): Iterator<Attribute> {
+    yield* this.list;
+  }
 }
