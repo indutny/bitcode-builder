@@ -23,7 +23,17 @@ export type Attribute =
 export class AttributeList {
   private list: Attribute[] = [];
 
-  public add(attr: Attribute): boolean {
+  public add(attr: Attribute | Attribute[]): boolean {
+    if (Array.isArray(attr)) {
+      let changed = false;
+      attr.forEach((single) => {
+        if (this.add(single)) {
+          changed = true;
+        }
+      });
+      return changed;
+    }
+
     if (typeof attr === 'string') {
       if (this.list.includes(attr)) {
         return false;
@@ -51,7 +61,17 @@ export class AttributeList {
     return true;
   }
 
-  public delete(attr: Attribute): boolean {
+  public delete(attr: Attribute | Attribute[]): boolean {
+    if (Array.isArray(attr)) {
+      let changed = false;
+      attr.forEach((single) => {
+        if (this.delete(single)) {
+          changed = true;
+        }
+      });
+      return changed;
+    }
+
     if (typeof attr === 'string') {
       const index = this.list.indexOf(attr);
       if (index === -1) {
