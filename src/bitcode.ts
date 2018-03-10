@@ -1,6 +1,6 @@
 import { Buffer } from 'buffer';
 
-import { Attribute } from './attribute-list';
+import { Attribute, AttributeList } from './attribute-list';
 import { CallingConv } from './calling-conv';
 import { Linkage } from './linkage';
 import * as types from './types';
@@ -93,4 +93,4 @@ export class Builder {
   }
 }
 
-export { types, values, Attribute, CallingConv, Linkage };
+export { types, values, Attribute, AttributeList, CallingConv, Linkage };
