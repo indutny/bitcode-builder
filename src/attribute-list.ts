@@ -20,7 +20,8 @@ export type Attribute =
   'jumptable' | 'convergent' | 'safestack' | 'argmemonly' | 'swiftself' |
   'swifterror' | 'norecurse' | 'inaccessiblememonly' |
   'inaccessiblememonly_or_argmemonly' | 'writeonly' | 'speculatable' |
-  'strictfp' | 'sanitize_hwaddress';
+  'strictfp' | 'sanitize_hwaddress' |
+  string;
 
 export class AttributeList {
   private list: Attribute[] = [];
