@@ -6,6 +6,10 @@ export type Attribute =
     key: 'align' | 'alignstack' | 'dereferenceable' | 'dereferenceable_or_null',
     value: number,
   } |
+  {
+    key: string,
+    value: string,
+  } |
   'alwaysinline' | 'byval' | 'inlinehint' | 'inreg' | 'minsize' | 'naked' |
   'nest' | 'noalias' | 'nobuiltin' | 'nocapture' | 'noduplicates' |
   'noimplictfloat' | 'noinline' | 'nonlazybind' | 'noredzone' | 'noreturn' |
