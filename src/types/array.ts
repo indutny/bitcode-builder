@@ -1,4 +1,5 @@
 import * as assert from 'assert';
+import { Buffer } from 'buffer';
 
 import * as values from '../values';
 import { Type } from './base';
@@ -24,10 +25,9 @@ class ArrayTy extends Type {
       toArray.elemType.isEqual(this.elemType);
   }
 
-  public val<T extends values.constants.Constant>(elems: T[])
-    : values.constants.Array<T> {
+  public val(elems: values.constants.Constant[]): values.constants.Array {
     assert.strictEqual(elems.length, this.length, 'Invalid elements count');
-    return new values.constants.Array<T>(this, elems);
+    return new values.constants.Array(this, elems);
   }
 }
 export { ArrayTy as Array };

@@ -1,3 +1,5 @@
+import { Buffer } from 'buffer';
+
 import { Attribute } from './attribute-list';
 import { CallingConv } from './calling-conv';
 import { Linkage } from './linkage';
@@ -5,7 +7,9 @@ import * as types from './types';
 import * as values from './values';
 
 import Type = types.Type;
-import Constant = values.constants.Constant;
+import constants = values.constants;
+
+const CHAR_WIDTH = 8;
 
 export class Builder {
   // Types
@@ -32,16 +36,27 @@ export class Builder {
 
   // Values
 
-  public static global(ty: types.Type, name: string, init?: Constant)
+  public static global(ty: types.Type, name: string, init?: constants.Constant)
     : values.Global {
     return new values.Global(ty, name, init);
   }
 
+  public static cstring(value: string): constants.Array {
+    return Builder.blob(Buffer.from(value));
+  }
+
+  public static blob(buffer: Buffer): constants.Array {
+    const elemTy = Builder.i(CHAR_WIDTH);
+    const ty = Builder.array(buffer.length, elemTy);
+
+    const elems = Array.from(buffer).map((ch) => elemTy.val(ch));
+    return ty.val(elems);
+  }
+
   // Metadata
 
-  public static metadata(value: values.constants.MetadataValue)
-    : values.constants.Metadata {
-    return new values.constants.Metadata(value);
+  public static metadata(value: constants.MetadataValue): constants.Metadata {
+    return new constants.Metadata(value);
   }
 
   // Convenience methods
@@ -60,13 +75,20 @@ export class Builder {
 
   public struct(name?: string): types.Struct { return Builder.struct(name); }
 
-  public global(ty: types.Type, name: string, init?: values.constants.Constant)
+  public global(ty: types.Type, name: string, init?: constants.Constant)
     : values.Global {
     return Builder.global(ty, name, init);
   }
 
-  public metadata(value: values.constants.MetadataValue)
-    : values.constants.Metadata {
+  public cstring(value: string): constants.Array {
+    return Builder.cstring(value);
+  }
+
+  public blob(buffer: Buffer): constants.Array {
+    return Builder.blob(buffer);
+  }
+
+  public metadata(value: constants.MetadataValue): constants.Metadata {
     return Builder.metadata(value);
   }
 }

@@ -11,8 +11,9 @@
     "build": "tsc",
     "clean": "rm -rf lib",
     "prepare": "npm run clean && npm run build",
+    "mocha": "mocha -r ts-node/register/type-check --reporter spec test/*-test.ts",
     "lint": "tslint -c tslint.json src/*.ts src/**/*.ts src/**/**/*.ts test/*.ts",
-    "test": "mocha -r ts-node/register/type-check --reporter spec test/*-test.ts && npm run lint"
+    "test": "npm run mocha && npm run lint"
   },
   "repository": {
     "type": "git",

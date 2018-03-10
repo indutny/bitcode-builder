@@ -43,7 +43,7 @@ export abstract class Constant extends Value {
     return this as any;
   }
 
-  public toArray(): constants.Array<Constant> {
+  public toArray(): constants.Array {
     assert(this.isArray(), 'Constant is not an Array instance');
     return this as any;
   }

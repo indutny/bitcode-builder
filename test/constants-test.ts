@@ -1,4 +1,6 @@
 import * as assert from 'assert';
+import { Buffer} from 'buffer';
+
 import { Builder } from '../src/bitcode';
 
 describe('bitcode/constants', () => {
@@ -36,13 +38,13 @@ describe('bitcode/constants', () => {
       assert.strictEqual(c.elems.length, 3);
 
       assert.strictEqual(c.elems[0].ty.typeString, 'i32');
-      assert.strictEqual(c.elems[0].value, 1);
+      assert.strictEqual(c.elems[0].toInt().value, 1);
 
       assert.strictEqual(c.elems[1].ty.typeString, 'i32');
-      assert.strictEqual(c.elems[1].value, 2);
+      assert.strictEqual(c.elems[1].toInt().value, 2);
 
       assert.strictEqual(c.elems[2].ty.typeString, 'i32');
-      assert.strictEqual(c.elems[2].value, 3);
+      assert.strictEqual(c.elems[2].toInt().value, 3);
     });
 
     it('should support `.isEqual()`', () => {
@@ -55,6 +57,16 @@ describe('bitcode/constants', () => {
 
       const c2 = b.array(3, i32).val([ i32.val(1), i32.val(2), i32.val(4) ]);
       assert(!c.isEqual(c2));
+    });
+
+    it('should create cstring', () => {
+      const cstr = b.cstring('hello');
+      assert.strictEqual(cstr.ty.typeString, '[5 x i8]');
+    });
+
+    it('should create blob', () => {
+      const cstr = b.blob(Buffer.from('hello'));
+      assert.strictEqual(cstr.ty.typeString, '[5 x i8]');
     });
   });
 
