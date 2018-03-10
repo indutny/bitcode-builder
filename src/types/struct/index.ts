@@ -21,7 +21,6 @@ export class Struct extends Type {
   public get typeString(): string {
     // Named struct
     if (this.name !== undefined) {
-      this.checkFinalized();
       return `%${this.name}`;
     }
 
