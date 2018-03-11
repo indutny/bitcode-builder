@@ -88,6 +88,7 @@ export class Struct extends Type {
       return existing;
     }
 
+    assert(!ty.isVoid(), 'Fields can\'t have void type');
     assert(!ty.isSignature(),
       'Fields can\'t have signature types, please use `sig.ptr()`');
 

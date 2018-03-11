@@ -9,6 +9,8 @@ class ArrayTy extends Type {
     super(`[${length} x ${elemType.typeString}]`);
 
     assert(!elemType.isVoid(), 'Can\'t create Array of Void');
+    assert(!elemType.isSignature(),
+      'Array can\'t have signature elements, please use `sig.ptr()`');
   }
 
   public isEqual(to: Type): boolean {
