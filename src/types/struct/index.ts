@@ -88,6 +88,9 @@ export class Struct extends Type {
       return existing;
     }
 
+    assert(!ty.isSignature(),
+      'Fields can\'t have signature types, please use `sig.ptr()`');
+
     const add = new Field(ty, name, this.privFields.length);
     this.privFields.push(add);
     this.fieldMap.set(name, add);
