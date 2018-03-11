@@ -5,5 +5,6 @@ export { Func } from './function';
 export { Int } from './int';
 export { Metadata, MetadataValue } from './metadata';
 export { Null } from './null';
+export { Reference } from './reference';
 export { Struct } from './struct';
 export { Undef } from './undef';

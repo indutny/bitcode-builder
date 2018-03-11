@@ -5,9 +5,9 @@ import { CallingConv } from '../../calling-conv';
 import { Linkage } from '../../linkage';
 import { Signature } from '../../types';
 import { validateName } from '../../utils';
-import { Constant } from './base';
+import * as constants from './';
 
-export class Declaration extends Constant {
+export class Declaration extends constants.Constant {
   public readonly returnAttrs: AttributeList = new AttributeList();
   public readonly attrs: AttributeList = new AttributeList();
   public linkage: Linkage = 'external';
@@ -22,7 +22,7 @@ export class Declaration extends Constant {
     this.paramAttrs = signature.params.map(() => new AttributeList());
   }
 
-  public isEqual(to: Constant): boolean {
+  public isEqual(to: constants.Constant): boolean {
     if (this === to) {
       return true;
     }
@@ -33,5 +33,9 @@ export class Declaration extends Constant {
 
     // TODO(indutny): verify cconv, linkage, paramAttrs, etc
     return to.ty.isEqual(this.ty);
+  }
+
+  public ref(): constants.Reference {
+    return new constants.Reference(this);
   }
 }
