@@ -32,7 +32,10 @@ export class Cast extends Instruction {
       assert(operand.ty.isInt() && targetType.isPointer(),
         'Invalid types for `inttoptr` cast');
     } else if (castType === 'bitcast') {
-      assert(operand.ty.isPointer() && targetType.isPointer(),
+      // TODO(indutny): check what we're doing with signatures here
+      assert(
+        (operand.ty.isSignature() || operand.ty.isPointer()) &&
+          (targetType.isSignature() || targetType.isPointer()),
         'Invalid types for `bitcast` cast');
     } else {
       throw new Error(`Sorry, but \`${castType}\` cast is not implemented yet`);
