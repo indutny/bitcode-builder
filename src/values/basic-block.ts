@@ -19,7 +19,7 @@ export class BasicBlock extends Value {
   private privTerminator: Instruction | undefined = undefined;
   private privName: string | undefined = undefined;
 
-  constructor(private readonly parent: Func, name?: string) {
+  constructor(public readonly parent: Func, name?: string) {
     super(new Label());
     if (name !== undefined) {
       this.name = name;
