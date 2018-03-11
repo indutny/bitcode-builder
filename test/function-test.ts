@@ -17,6 +17,17 @@ describe('bitcode/function', () => {
       assert(decl.ty.isEqual(sig));
       assert.strictEqual(decl.name, 'some_func');
     });
+
+    it('should create a reference', () => {
+      const sig = b.signature(b.void(), [ b.i(32) ]);
+
+      const decl = sig.declareFunction('some_func');
+      const ref = decl.ref();
+      assert(ref.isReference());
+      assert(ref.ty.isPointer());
+      assert(ref.ty.toPointer().to.isEqual(sig));
+      assert(ref.toReference().to.isEqual(decl));
+    });
   });
 
   describe('Func', () => {
