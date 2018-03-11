@@ -102,7 +102,12 @@ export class BasicBlock extends Value {
   }
 
   public call(callee: Value, args: ReadonlyArray<Value>,
-              callType: CallType = 'normal', cconv: CallingConv = 'ccc'): Call {
+              callType: CallType = 'normal', cconv?: CallingConv): Call {
+    // Pick cconv from declaration
+    if (!cconv) {
+      const decl = callee.toConstant().toDeclaration();
+      cconv = decl.cconv;
+    }
     return this.push<Call>(new Call(callee, args, callType, cconv));
   }
 
