@@ -12,7 +12,12 @@ export class InsertValue extends Instruction {
     super(aggr.ty, 'insertvalue', [ aggr, element ]);
 
     const fieldType = getAggrFieldType(aggr.ty, index);
-    assert(fieldType.isEqual(element.ty),
-      'element type doesn\'t match field type in `insertvalue`');
+    if (element.ty.isSignature()) {
+      assert(element.ty.isEqual(fieldType.toPointer().to),
+        'element type doesn\'t match field type in `insertvalue`');
+    } else {
+      assert(element.ty.isEqual(fieldType),
+        'element type doesn\'t match field type in `insertvalue`');
+    }
   }
 }

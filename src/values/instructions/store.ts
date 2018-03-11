@@ -16,5 +16,16 @@ export class Store extends Instruction {
     if (alignment !== undefined) {
       checkAlignment(alignment);
     }
+
+    const slotType = ptr.ty.toPointer().to;
+
+    // It's okay to store functions inside a pointer field
+    if (value.ty.isSignature()) {
+      assert(value.ty.isEqual(slotType.toPointer().to),
+        'Invalid value type for Store instruction');
+    } else {
+      assert(value.ty.isEqual(slotType),
+        'Invalid value type for Store instruction');
+    }
   }
 }
