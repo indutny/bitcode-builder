@@ -1,7 +1,7 @@
 import * as types from '../../types';
 import { Constant } from './base';
 
-export type MetadataValue = ReadonlyArray<string | Constant>;
+export type MetadataValue = string | Constant | ReadonlyArray<Metadata>;
 
 export class Metadata extends Constant {
   constructor(public readonly value: MetadataValue) {
@@ -17,20 +17,26 @@ export class Metadata extends Constant {
       return false;
     }
 
-    const toMetadata = to as Metadata;
-    if (toMetadata.value.length !== this.value.length) {
+    const toValue = (to as Metadata).value;
+    if (typeof toValue === 'string') {
+      return toValue === this.value;
+    }
+
+    if (toValue instanceof Constant) {
+      return this.value instanceof Constant && toValue.isEqual(this.value);
+    }
+
+    // `toValue` is an Array
+    if (!Array.isArray(this.value)) {
       return false;
     }
 
-    return toMetadata.value.every((v, i) => {
-      const our = this.value[i];
-      if (typeof v === 'string') {
-        return v === our;
-      } else if (v instanceof Constant) {
-        return our instanceof Constant && v.isEqual(our);
-      } else {
-        throw new Error('Unexpected value type!');
-      }
+    if (toValue.length !== this.value.length) {
+      return false;
+    }
+
+    return toValue.every((subValue, index) => {
+      return subValue.isEqual((this.value as Metadata[])[index]);
     });
   }
 }
