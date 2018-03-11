@@ -66,8 +66,12 @@ describe('bitcode/function', () => {
 
       const fn = sig.defineFunction('some_func', [ 'p' ]);
 
-      const m = b.metadata([ 'ohai' ]);
-      fn.metadata.set('prof', b.metadata([ 'hello', m, fn ]));
+      const m = b.metadata([ b.metadata('ohai') ]);
+      fn.metadata.set('prof', b.metadata([
+        b.metadata('hello'),
+        m,
+        b.metadata(fn),
+      ]));
     });
 
     it('should iterate through the blocks/instructions', () => {
