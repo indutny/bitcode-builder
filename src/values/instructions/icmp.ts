@@ -15,7 +15,8 @@ export class ICmp extends Instruction {
               public readonly right: values.Value) {
     super(new Int(BOOL_WIDTH), 'icmp', [ left, right ]);
 
-    assert(left.ty.isInt(), 'Only integer types are supported at the moment');
+    assert(left.ty.isInt() || left.ty.isPointer(),
+      'Only integer types are supported at the moment');
     assert(left.ty.isEqual(right.ty),
       'Left and right operands of ICmp have different types');
   }
