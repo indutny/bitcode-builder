@@ -38,10 +38,6 @@ export abstract class Constant extends Value {
     return this instanceof constants.Func;
   }
 
-  public isReference(): boolean {
-    return this instanceof constants.Reference;
-  }
-
   public toInt(): constants.Int {
     assert(this.isInt(), 'Constant is not an Int instance');
     return this as any;
@@ -79,11 +75,6 @@ export abstract class Constant extends Value {
 
   public toFunction(): constants.Func {
     assert(this.isFunction(), 'Constant is not a Func instance');
-    return this as any;
-  }
-
-  public toReference(): constants.Reference {
-    assert(this.isReference(), 'Constant is not a Reference instance');
     return this as any;
   }
 }
