@@ -19,8 +19,10 @@ const sum = fn.body.binop('add',
                           fn.getArgument('param2'));
 fn.body.ret(sum);
 
-// Pass `fn` to `bitcode` module (WIP)
+// Pass `fn` to `bitcode` module
 ```
+
+See [`bitcode`][0] module for compiling the CFG to binary format.
 
 #### LICENSE
 
@@ -46,3 +48,5 @@ NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
 DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+[0]: https://github.com/indutny/bitcode
