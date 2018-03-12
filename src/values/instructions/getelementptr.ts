@@ -4,16 +4,21 @@ import * as values from '../';
 import { Instruction } from './base';
 import { getAggrFieldType } from './common';
 
-function getElementPtrType(value: values.Value,
-                           index?: values.constants.Constant) {
+function getElementPtrType(value: values.Value, index?: values.Value) {
   const ptr = value.ty.toPointer();
 
   if (index === undefined) {
     return ptr;
   }
 
-  assert(index.isInt(), 'Expected integer constant offset for `extractvalue`');
-  return getAggrFieldType(ptr.to, index.toInt().value).ptr();
+  if (ptr.to.isArray() && !index.isConstant()) {
+    return ptr.to.toArray().elemType;
+  }
+
+  const indexConst = index.toConstant();
+  assert(indexConst.isInt(),
+    'Expected integer constant offset for `getelementptr`');
+  return getAggrFieldType(ptr.to, indexConst.toInt().value).ptr();
 }
 
 // TODO(indutny): support `inrange`
@@ -21,7 +26,7 @@ function getElementPtrType(value: values.Value,
 export class GetElementPtr extends Instruction {
   constructor(public readonly ptr: values.Value,
               public readonly ptrIndex: values.Value,
-              public readonly index?: values.constants.Constant,
+              public readonly index?: values.Value,
               public readonly inbounds: boolean = false) {
     super(
       getElementPtrType(ptr, index),

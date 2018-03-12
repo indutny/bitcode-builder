@@ -87,7 +87,7 @@ export class BasicBlock extends Value {
     return this.push<Store>(new Store(value, ptr, alignment, isVolatile));
   }
 
-  public getelementptr(ptr: Value, ptrIndex: Value, index?: Constant,
+  public getelementptr(ptr: Value, ptrIndex: Value, index?: Value,
                        inbounds: boolean = false): GetElementPtr {
     return this.push<GetElementPtr>(
       new GetElementPtr(ptr, ptrIndex, index, inbounds));
