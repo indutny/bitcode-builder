@@ -33,6 +33,8 @@ describe('bitcode/types', () => {
     assert(!sig.isEqual(b.signature(b.void(), [ b.i(32) ])));
     assert(!sig.isEqual(b.signature(b.i(32), [ b.i(32), b.i(8) ])));
     assert(!sig.isEqual(b.signature(b.void(), [ b.i(32), b.i(16) ])));
+
+    assert(sig.isEqual(sig.ptr()));
   });
 
   describe('Array', () => {

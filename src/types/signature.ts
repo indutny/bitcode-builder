@@ -2,6 +2,7 @@ import * as assert from 'assert';
 
 import * as values from '../values';
 import { Type } from './base';
+import { Pointer } from './pointer';
 
 export class Signature extends Type {
   constructor(public readonly returnType: Type,
@@ -13,6 +14,15 @@ export class Signature extends Type {
   public isEqual(to: Type): boolean {
     if (this === to) {
       return true;
+    }
+
+    // Pointer to signature is equal to the signature
+    if (to.isPointer()) {
+      const toPtr = to as Pointer;
+      if (toPtr.to.isSignature()) {
+        return this.isEqual(toPtr.to as Signature);
+      }
+      return false;
     }
 
     if (!to.isSignature()) {

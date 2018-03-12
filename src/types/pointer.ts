@@ -13,6 +13,10 @@ export class Pointer extends Type {
     }
 
     if (!to.isPointer()) {
+      // Signatures might be equal to pointers, better check
+      if (to.isSignature()) {
+        return to.isEqual(this);
+      }
       return false;
     }
 
