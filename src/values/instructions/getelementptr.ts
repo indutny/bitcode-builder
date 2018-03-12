@@ -12,7 +12,7 @@ function getElementPtrType(value: values.Value, index?: values.Value) {
   }
 
   if (ptr.to.isArray() && !index.isConstant()) {
-    return ptr.to.toArray().elemType;
+    return ptr.to.toArray().elemType.ptr();
   }
 
   const indexConst = index.toConstant();
