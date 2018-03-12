@@ -41,5 +41,12 @@ export class Call extends Instruction {
       assert.strictEqual(this.cconv, calleeFn.cconv,
         'Calling convention mismatch');
     }
+
+    assert.strictEqual(args.length, this.calleeSignature.params.length,
+      'Invalid number of arguments for function signature');
+    this.calleeSignature.params.forEach((param, index) => {
+      assert(param.isEqual(args[index]!.ty),
+        `Invalid type of call parameter #${index}`);
+    });
   }
 }
