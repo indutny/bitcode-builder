@@ -2,6 +2,9 @@
 [![Build Status](https://secure.travis-ci.org/indutny/bitcode-builder.svg)](http://travis-ci.org/indutny/bitcode-builder)
 [![NPM version](https://badge.fury.io/js/bitcode-builder.svg)](https://badge.fury.io/js/bitcode-builder)
 
+A helper for [`bitcode`][0] module for building the LLVM Intermediate
+Representation.
+
 ## Usage
 
 ```typescript
