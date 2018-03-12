@@ -42,7 +42,10 @@ export class Builder {
   }
 
   public static cstring(value: string): constants.Array {
-    return Builder.blob(Buffer.from(value));
+    const len = Buffer.byteLength(value);
+    const blob = Buffer.alloc(len + 1);
+    blob.write(value);
+    return Builder.blob(Buffer.from(blob));
   }
 
   public static blob(buffer: Buffer): constants.Array {

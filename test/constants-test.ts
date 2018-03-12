@@ -61,7 +61,7 @@ describe('bitcode/constants', () => {
 
     it('should create cstring', () => {
       const cstr = b.cstring('hello');
-      assert.strictEqual(cstr.ty.typeString, '[5 x i8]');
+      assert.strictEqual(cstr.ty.typeString, '[6 x i8]');
     });
 
     it('should create blob', () => {
