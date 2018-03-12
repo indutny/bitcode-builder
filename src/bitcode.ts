@@ -85,6 +85,7 @@ export class Builder {
   }
 
   public blob(buffer: Buffer): constants.Array {
+    // TODO(indutny): cache results?
     return Builder.blob(buffer);
   }
 
