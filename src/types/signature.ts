@@ -43,7 +43,7 @@ export class Signature extends Type {
   public defineFunction(name: string, paramNames: string[])
     : values.constants.Func {
     assert.strictEqual(paramNames.length, this.params.length,
-      'Invalid parameter count for `.defineFunc()`');
+      'Invalid parameter count for `.defineFunction()`');
     return new values.constants.Func(this, name, paramNames);
   }
 }
