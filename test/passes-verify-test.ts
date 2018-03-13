@@ -109,4 +109,35 @@ describe('bitcode/passes/verify', () => {
       verify.run();
     });
   });
+
+  it('should not throw on phis of arguments', () => {
+    const sig = b.signature(b.i(8), [ b.i(8) ]);
+
+    const fn = sig.defineFunction('fn', [ 'p' ]);
+
+    const onTrue = fn.createBlock('true');
+    const onFalse = fn.createBlock('false');
+    const join = fn.createBlock('join');
+
+    fn.body.branch(b.i(1).val(1), onTrue, onFalse);
+
+    const sum1 = onTrue.binop('add', b.i(8).val(2), b.i(8).val(3));
+    onTrue.jmp(join);
+
+    onFalse.jmp(join);
+
+    const phi = join.phi({ fromBlock: onTrue, value: sum1 });
+    phi.addEdge({ fromBlock: onFalse, value: fn.getArgument('p') });
+    join.ret(phi);
+
+    const verify = new passes.Verify({
+      declarations: [],
+      functions: [ fn ],
+      globals: [],
+    });
+
+    assert.doesNotThrow(() => {
+      verify.run();
+    });
+  });
 });

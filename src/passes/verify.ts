@@ -45,6 +45,10 @@ export class Verify extends Pass {
           liveSet.add(i);
         }
       }
+
+      for (const arg of fn.args) {
+        liveSet.add(arg);
+      }
     }
 
     // Propagate liveness through successors until stabilized
