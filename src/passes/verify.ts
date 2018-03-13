@@ -126,11 +126,26 @@ export class Verify extends Pass {
         return reachable.get(pred)!.has(bb);
       });
 
-      if (!dominated) {
-        continue;
-      }
-
       for (const value of liveSet) {
+        let missing = false;
+
+        if (!dominated) {
+          // Propagate the value only if all predecessors has it
+          // (If it's definition dominates)
+          for (const pred of succ.predecessors) {
+            if (pred === bb) {
+              continue;
+            }
+            if (!live.get(pred)!.has(value)) {
+              missing = true;
+            }
+          }
+
+          if (missing) {
+            continue;
+          }
+        }
+
         if (!liveSucc.has(value)) {
           liveSucc.add(value);
           changed = true;
