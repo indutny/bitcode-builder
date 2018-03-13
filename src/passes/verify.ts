@@ -5,9 +5,14 @@ import { Pass } from './base';
 
 import constants = values.constants;
 import instructions = values.instructions;
+import BasicBlock = values.BasicBlock;
+import Func = constants.Func;
+
+type ReachableSet = Set<BasicBlock>;
+type ReachableMap = Map<BasicBlock, ReachableSet>;
 
 type LiveSet = Set<values.Value>;
-type LiveMap = Map<values.BasicBlock, LiveSet>;
+type LiveMap = Map<BasicBlock, LiveSet>;
 
 // Verify that all values are declared before their use
 export class Verify extends Pass {
@@ -33,7 +38,55 @@ export class Verify extends Pass {
     }
   }
 
-  private visitFunction(fn: constants.Func): void {
+  private visitFunction(fn: Func): void {
+    const reachable = this.computeReachable(fn);
+    const live = this.computeLiveness(reachable, fn);
+
+    // Now that we know which values are alive in each block
+    // Walk through instructions and check that every of them
+    for (const bb of fn) {
+      this.checkBlock(live, bb);
+    }
+  }
+
+  // Private API
+
+  private computeReachable(fn: Func): ReachableMap {
+    const reachable: ReachableMap = new Map();
+    for (const bb of fn) {
+      reachable.set(bb, new Set([ bb ]));
+    }
+
+    let changed = true;
+    while (changed) {
+      changed = false;
+
+      for (const bb of fn) {
+        if (this.propagateReachable(reachable, bb)) {
+          changed = true;
+        }
+      }
+    }
+
+    return reachable;
+  }
+
+  private propagateReachable(reachable: ReachableMap, bb: BasicBlock): boolean {
+    let changed = false;
+
+    const reachSet = reachable.get(bb)!;
+    for (const pred of bb.predecessors) {
+      for (const predReach of reachable.get(pred)!) {
+        if (!reachSet.has(predReach)) {
+          reachSet.add(predReach);
+          changed = true;
+        }
+      }
+    }
+    return changed;
+  }
+
+  private computeLiveness(reachable: ReachableMap, fn: Func): LiveMap {
     // Create liveness sets
     const live: LiveMap = new Map();
     for (const bb of fn) {
@@ -53,44 +106,31 @@ export class Verify extends Pass {
       changed = false;
 
       for (const bb of fn) {
-        if (this.propagateBlockLiveness(live, bb)) {
+        if (this.propagateBlockLiveness(live, reachable, bb)) {
           changed = true;
         }
       }
     }
 
-    // Now that we know which values are alive in each block
-    // Walk through instructions and check that every of them
-    for (const bb of fn) {
-      this.checkBlock(live, bb);
-    }
+    return live;
   }
 
-  private propagateBlockLiveness(live: LiveMap, bb: values.BasicBlock)
-    : boolean {
+  private propagateBlockLiveness(live: LiveMap, reachable: ReachableMap,
+                                 bb: BasicBlock): boolean {
     let changed = false;
     const liveSet = live.get(bb)!;
     for (const succ of bb.successors) {
       const liveSucc = live.get(succ)!;
 
+      const dominated = succ.predecessors.every((pred) => {
+        return reachable.get(pred)!.has(bb);
+      });
+
+      if (!dominated) {
+        continue;
+      }
+
       for (const value of liveSet) {
-        let missing = false;
-
-        // Propagate the value only if all predecessors has it
-        // (If it's definition dominates)
-        for (const pred of succ.predecessors) {
-          if (pred === bb) {
-            continue;
-          }
-          if (!live.get(pred)!.has(value)) {
-            missing = true;
-          }
-        }
-
-        if (missing) {
-          continue;
-        }
-
         if (!liveSucc.has(value)) {
           liveSucc.add(value);
           changed = true;
@@ -100,7 +140,7 @@ export class Verify extends Pass {
     return changed;
   }
 
-  private checkBlock(liveMap: LiveMap, bb: values.BasicBlock): void {
+  private checkBlock(liveMap: LiveMap, bb: BasicBlock): void {
     const liveSet = liveMap.get(bb)!;
     for (const i of bb) {
       if (i instanceof instructions.Phi) {

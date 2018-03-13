@@ -9,6 +9,11 @@ export abstract class Value {
 
   public abstract toString(): string;
 
+  // Node.js REPL
+  public inspect(): string {
+    return this.toString();
+  }
+
   public isArgument(): boolean {
     return this instanceof values.Argument;
   }

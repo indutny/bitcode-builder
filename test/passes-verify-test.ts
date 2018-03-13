@@ -140,4 +140,31 @@ describe('bitcode/passes/verify', () => {
       verify.run();
     });
   });
+
+  it('should support loops', () => {
+    const sig = b.signature(b.i(8), [ b.i(8) ]);
+
+    const fn = sig.defineFunction('fn', [ 'p' ]);
+
+    const start = fn.createBlock('start');
+    const loop = fn.createBlock('loop');
+
+    const sum = fn.body.binop('add', b.i(8).val(1), b.i(8).val(2));
+
+    fn.body.jmp(start);
+    start.jmp(loop);
+
+    loop.binop('sub', sum, b.i(8).val(1));
+    loop.jmp(start);
+
+    const verify = new passes.Verify({
+      declarations: [],
+      functions: [ fn ],
+      globals: [],
+    });
+
+    assert.doesNotThrow(() => {
+      verify.run();
+    });
+  });
 });
