@@ -45,10 +45,6 @@ export class Verify extends Pass {
           liveSet.add(i);
         }
       }
-
-      for (const arg of fn.args) {
-        liveSet.add(arg);
-      }
     }
 
     // Propagate liveness through successors until stabilized
@@ -115,6 +111,11 @@ export class Verify extends Pass {
             preds.delete(edge.fromBlock),
             'Duplicate or unknown `fromBlock`: ' +
             `"${edge.fromBlock}" of phi in block "${bb}"`);
+
+          // We're interested only in instructions
+          if (!(edge.value instanceof instructions.Instruction)) {
+            continue;
+          }
 
           const livePred = liveMap.get(edge.fromBlock)!;
           assert(
