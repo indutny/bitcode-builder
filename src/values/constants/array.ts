@@ -19,6 +19,11 @@ class ArrayVal extends Constant {
     return toArray.elems.length === this.elems.length &&
       toArray.elems.every((elem, i) => elem.isEqual(this.elems[i]));
   }
+
+  public toString(): string {
+    const elems = this.elems.map((elem) => elem.toString());
+    return `[const.array elems={${elems.join(', ')}}]`;
+  }
 }
 
 export { ArrayVal as Array };

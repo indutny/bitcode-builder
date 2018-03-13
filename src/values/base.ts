@@ -7,6 +7,8 @@ export abstract class Value {
   constructor(public readonly ty: Type) {
   }
 
+  public abstract toString(): string;
+
   public isArgument(): boolean {
     return this instanceof values.Argument;
   }

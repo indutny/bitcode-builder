@@ -31,4 +31,8 @@ export class Global extends Value {
 
     this.privIsConstant = true;
   }
+
+  public toString(): string {
+    return `[global ${this.name}]`;
+  }
 }

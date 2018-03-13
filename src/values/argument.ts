@@ -6,4 +6,8 @@ export class Argument extends Value {
               public readonly name: string) {
     super(ty);
   }
+
+  public toString(): string {
+    return `[argument index=${this.index} name=${this.name}]`;
+  }
 }

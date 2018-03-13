@@ -34,4 +34,8 @@ export class Declaration extends Constant {
     // TODO(indutny): verify cconv, linkage, paramAttrs, etc
     return to.ty.isEqual(this.ty);
   }
+
+  public toString(): string {
+    return `[declaration name=${this.name}]`;
+  }
 }

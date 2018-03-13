@@ -26,6 +26,14 @@ export class BasicBlock extends Value {
     }
   }
 
+  public toString(): string {
+    if (this.name === undefined) {
+      return '[anonymous block]';
+    } else {
+      return `[block ${this.name}]`;
+    }
+  }
+
   public get name(): string | undefined {
     return this.privName;
   }

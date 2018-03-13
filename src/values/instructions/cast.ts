@@ -12,7 +12,7 @@ export class Cast extends Instruction {
   constructor(public readonly castType: CastType,
               public readonly operand: values.Value,
               public readonly targetType: Type) {
-    super(targetType, 'cast', [ operand ]);
+    super(targetType, 'cast.' + castType, [ operand ]);
 
     if (castType === 'trunc' || castType === 'zext' || castType === 'sext') {
       assert(operand.ty.isInt() && targetType.isInt(),

@@ -36,6 +36,10 @@ export class Func extends Declaration {
     });
   }
 
+  public toString(): string {
+    return `[function name=${this.name}]`;
+  }
+
   public createBlock(name?: string) {
     return new BasicBlock(this, name);
   }

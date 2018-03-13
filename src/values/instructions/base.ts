@@ -30,4 +30,14 @@ export abstract class Instruction extends Value {
   public *[Symbol.iterator](): Iterator<Value> {
     yield* this.operands;
   }
+
+  public toString(): string {
+    const operands = this.operands.map((op) => {
+      if (op instanceof Instruction) {
+        return `[instr opcode=${op.opcode}]`;
+      }
+      return op.toString();
+    });
+    return `[instr opcode=${this.opcode} operands={${operands.join(', ')}}]`;
+  }
 }

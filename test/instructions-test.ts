@@ -49,7 +49,7 @@ describe('bitcode/instructions', () => {
   describe('binop', () => {
     it('should be created', () => {
       const i = fn.body.binop('add', fn.getArgument('a'), fn.getArgument('b'));
-      assert.strictEqual(i.opcode, 'binop');
+      assert.strictEqual(i.opcode, 'binop.add');
       assert.strictEqual(i.binopType, 'add');
       assert(i.ty.isEqual(fn.getArgument('a').ty));
     });
@@ -70,7 +70,7 @@ describe('bitcode/instructions', () => {
   describe('cast', () => {
     it('should be created', () => {
       const i = fn.body.cast('zext', fn.getArgument('a'), b.i(64));
-      assert.strictEqual(i.opcode, 'cast');
+      assert.strictEqual(i.opcode, 'cast.zext');
       assert.strictEqual(i.castType, 'zext');
       assert(i.ty.isEqual(b.i(64)));
     });

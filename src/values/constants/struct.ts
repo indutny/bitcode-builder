@@ -21,4 +21,9 @@ export class Struct extends Constant {
       toStruct.fields.length === this.fields.length &&
       toStruct.fields.every((field, i) => field.isEqual(this.fields[i]));
   }
+
+  public toString(): string {
+    // TODO(indutny): print more
+    return '[struct]';
+  }
 }

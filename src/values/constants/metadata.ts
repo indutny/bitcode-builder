@@ -39,4 +39,9 @@ export class Metadata extends Constant {
       return subValue.isEqual((this.value as Metadata[])[index]);
     });
   }
+
+  public toString(): string {
+    // TODO(indutny): print more
+    return '[metadata]';
+  }
 }

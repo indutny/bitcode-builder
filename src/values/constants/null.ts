@@ -18,4 +18,8 @@ export class Null extends Constant {
     const toNull = to as Null;
     return toNull.ty.isEqual(this.ty);
   }
+
+  public toString(): string {
+    return `[null type=${this.ty.typeString}]`;
+  }
 }

@@ -18,4 +18,8 @@ export class Undef extends Constant {
     const toUndef = to as Undef;
     return toUndef.ty.isEqual(this.ty);
   }
+
+  public toString(): string {
+    return `[undef type=${this.ty.typeString}]`;
+  }
 }

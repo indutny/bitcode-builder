@@ -118,7 +118,7 @@ describe('bitcode/function', () => {
       assert.deepStrictEqual(instrs, [
         [ 'jmp' ],
         [ 'phi', 'jmp' ],
-        [ 'binop', 'branch' ],
+        [ 'binop.add', 'branch' ],
         [ 'ret' ],
       ]);
     });

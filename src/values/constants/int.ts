@@ -19,4 +19,8 @@ export class Int extends Constant {
     const toInt = to as Int;
     return toInt.value === this.value;
   }
+
+  public toString(): string {
+    return `[int value=${this.value}]`;
+  }
 }
