@@ -49,6 +49,28 @@ describe('bitcode/passes/verify', () => {
     }, /Found reference to.*global.*undeclared/);
   });
 
+  it('should not throw on not conflicting globals', () => {
+    const sig = b.signature(b.void(), []);
+
+    const one = b.global(b.i(32).ptr(), 'one');
+    const sameOne = b.global(b.i(32).ptr(), 'one');
+
+    const user = sig.defineFunction('user', []);
+
+    user.body.load(sameOne);
+    user.body.ret();
+
+    const verify = new passes.Verify({
+      declarations: [],
+      functions: [ user ],
+      globals: [ one, sameOne ],
+    });
+
+    assert.doesNotThrow(() => {
+      verify.run();
+    });
+  });
+
   it('should throw on operands not dominating uses', () => {
     const sig = b.signature(b.i(8), []);
 

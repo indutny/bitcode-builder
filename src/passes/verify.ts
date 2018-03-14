@@ -16,20 +16,35 @@ type LiveMap = Map<BasicBlock, LiveSet>;
 
 // Verify that all values are declared before their use
 export class Verify extends Pass {
-  private readonly globals: Set<values.Value> = new Set();
+  private readonly globals: Map<string, values.Value> = new Map();
 
   public run(): void {
     // Add all possible global references
     for (const decl of this.input.declarations) {
-      this.globals.add(decl);
+      if (this.globals.has(decl.name)) {
+        assert(decl.ty.isEqual(this.globals.get(decl.name)!.ty),
+          `Conflicting type for declaration with name: "${decl.name}"`);
+        continue;
+      }
+      this.globals.set(decl.name, decl);
     }
 
     for (const global of this.input.globals) {
-      this.globals.add(global);
+      if (this.globals.has(global.name)) {
+        assert(global.ty.isEqual(this.globals.get(global.name)!.ty),
+          `Conflicting type for global with name: "${global.name}"`);
+        continue;
+      }
+      this.globals.set(global.name, global);
     }
 
     for (const fn of this.input.functions) {
-      this.globals.add(fn);
+      if (this.globals.has(fn.name)) {
+        assert(fn.ty.isEqual(this.globals.get(fn.name)!.ty),
+          `Conflicting type for function with name: "${fn.name}"`);
+        continue;
+      }
+      this.globals.set(fn.name, fn);
     }
 
     // Calculate liveness map
@@ -185,11 +200,17 @@ export class Verify extends Pass {
 
       for (const operand of i) {
         if (operand instanceof constants.Declaration) {
-          assert(this.globals.has(operand),
+          assert(this.globals.has(operand.name),
             `Found reference to undeclared function: "${operand}"`);
+          assert(this.globals.get(operand.name)!.ty.isEqual(operand.ty),
+            `Found conflicting reference to function: "${operand}"`);
+
         } else if (operand instanceof values.Global) {
-          assert(this.globals.has(operand),
+          assert(this.globals.has(operand.name),
             `Found reference to undeclared global: "${operand}"`);
+          assert(this.globals.get(operand.name)!.ty.isEqual(operand.ty),
+            `Found conflicting reference to global: "${operand}"`);
+
         } else if (operand instanceof instructions.Instruction) {
           assert(
             liveSet.has(operand),
