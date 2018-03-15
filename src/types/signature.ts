@@ -40,7 +40,7 @@ export class Signature extends Type {
     return new values.constants.Declaration(this, name);
   }
 
-  public defineFunction(name: string, paramNames: string[])
+  public defineFunction(name: string, paramNames: ReadonlyArray<string>)
     : values.constants.Func {
     assert.strictEqual(paramNames.length, this.params.length,
       'Invalid parameter count for `.defineFunction()`');
