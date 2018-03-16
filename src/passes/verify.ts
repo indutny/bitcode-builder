@@ -171,6 +171,7 @@ export class Verify extends Pass {
   }
 
   private checkBlock(liveMap: LiveMap, bb: BasicBlock): void {
+    assert(bb.isTerminated(), `Unterminated block "${bb}" in "${bb.parent}"`);
     const liveSet = liveMap.get(bb)!;
     for (const i of bb) {
       if (i instanceof instructions.Phi) {
