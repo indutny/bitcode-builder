@@ -5,8 +5,8 @@ import { Type } from '../../types';
 import { Instruction } from './base';
 
 export interface IPhiEdge {
-  fromBlock: values.BasicBlock;
-  value: values.Value;
+  readonly fromBlock: values.BasicBlock;
+  readonly value: values.Value;
 }
 
 export class Phi extends Instruction {

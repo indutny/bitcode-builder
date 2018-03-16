@@ -1,9 +1,9 @@
 import * as values from '../values';
 
 export interface IPassInput {
-  declarations: values.constants.Declaration[];
-  functions: values.constants.Func[];
-  globals: values.Global[];
+  readonly declarations: values.constants.Declaration[];
+  readonly functions: values.constants.Func[];
+  readonly globals: values.Global[];
 }
 
 export abstract class Pass {

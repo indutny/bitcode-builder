@@ -5,8 +5,8 @@ import { Void } from '../../types';
 import { Instruction } from './base';
 
 export interface ISwitchCase {
-  value: values.constants.Int;
-  block: values.BasicBlock;
+  readonly value: values.constants.Int;
+  readonly block: values.BasicBlock;
 }
 
 export class Switch extends Instruction {
