@@ -26,31 +26,35 @@ export type Attribute =
 export class AttributeList {
   private list: Attribute[] = [];
 
-  public add(attr: Attribute | Attribute[]): boolean {
+  public add(attr: Attribute | ReadonlyArray<Attribute>): boolean {
     if (Array.isArray(attr)) {
       let changed = false;
-      attr.forEach((single) => {
-        if (this.add(single)) {
+      attr.forEach((sub) => {
+        if (this.add(sub)) {
           changed = true;
         }
       });
       return changed;
     }
 
-    if (typeof attr === 'string') {
-      if (this.list.includes(attr)) {
+    // XXX(indutny): `Array.isArray` above doesn't work as a type guard
+    const single: Attribute = attr as Attribute;
+
+    if (typeof single === 'string') {
+      if (this.list.includes(single)) {
         return false;
       }
+
     } else {
       const found = this.list.some((entry) => {
         if (typeof entry === 'string') {
           return false;
         }
-        if (entry.key !== attr.key) {
+        if (entry.key !== single.key) {
           return false;
         }
 
-        assert.strictEqual(entry.value, attr.value,
+        assert.strictEqual(entry.value, single.value,
           `Conflicting attribute value for "${entry.key}"`);
         return true;
       });
@@ -60,23 +64,24 @@ export class AttributeList {
       }
     }
 
-    this.list.push(attr);
+    this.list.push(single);
     return true;
   }
 
-  public delete(attr: Attribute | Attribute[]): boolean {
+  public delete(attr: Attribute | ReadonlyArray<Attribute>): boolean {
     if (Array.isArray(attr)) {
       let changed = false;
-      attr.forEach((single) => {
-        if (this.delete(single)) {
+      attr.forEach((sub) => {
+        if (this.delete(sub)) {
           changed = true;
         }
       });
       return changed;
     }
 
-    if (typeof attr === 'string') {
-      const index = this.list.indexOf(attr);
+    const single = attr as Attribute;
+    if (typeof single === 'string') {
+      const index = this.list.indexOf(single);
       if (index === -1) {
         return false;
       }
@@ -89,10 +94,10 @@ export class AttributeList {
       if (typeof entry === 'string') {
         return false;
       }
-      if (entry.key !== attr.key) {
+      if (entry.key !== single.key) {
         return false;
       }
-      if (entry.value !== attr.value) {
+      if (entry.value !== single.value) {
         return false;
       }
 
