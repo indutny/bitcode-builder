@@ -75,9 +75,11 @@ export class Func extends Declaration {
       list.push(bb);
       yield bb;
 
-      bb.successors.forEach((succ) => {
-        queue.push(succ);
-      });
+      // Push successors in reverse order, so that we'll pop the first on
+      // next iteration
+      for (let i = bb.successors.length - 1; i >= 0; i--) {
+        queue.push(bb.successors[i]!);
+      }
     }
 
     if (canCache) {
