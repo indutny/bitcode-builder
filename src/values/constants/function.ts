@@ -63,7 +63,7 @@ export class Func extends Declaration {
 
     const list = [];
     while (queue.length !== 0) {
-      const bb = queue.shift() as BasicBlock;
+      const bb = queue.pop() as BasicBlock;
       if (visited.has(bb)) {
         continue;
       }
