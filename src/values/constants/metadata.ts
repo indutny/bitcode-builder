@@ -1,11 +1,33 @@
+import * as assert from 'assert';
+
 import * as types from '../../types';
 import { Constant } from './base';
 
 export type MetadataValue = string | Constant | ReadonlyArray<Metadata>;
 
 export class Metadata extends Constant {
+  private privSelfReference: boolean = false;
+  private privDistinct: boolean = false;
+
   constructor(public readonly value: MetadataValue) {
     super(new types.Metadata());
+  }
+
+  public get selfReference(): boolean { return this.privSelfReference; }
+  public get distinct(): boolean { return this.privDistinct; }
+
+  public addSelfReference(): this {
+    assert(Array.isArray(this.value),
+      'Can\'t add self-reference to non-tuple metadata');
+    this.privSelfReference = true;
+    return this;
+  }
+
+  public markDistinct(): this {
+    assert(Array.isArray(this.value),
+      'Can\'t have distinct non-tuple metadata');
+    this.privDistinct = true;
+    return this;
   }
 
   public isEqual(to: Constant): boolean {
