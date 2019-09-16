@@ -19,8 +19,8 @@ export class Builder {
     return new types.Void();
   }
 
-  public static i(width: number): types.Int {
-    return new types.Int(width);
+  public static i(width: number, signed: boolean = false): types.Int {
+    return new types.Int(width, signed);
   }
 
   public static signature(returnType: Type, params: Type[]): types.Signature {
